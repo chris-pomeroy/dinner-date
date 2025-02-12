@@ -9,7 +9,6 @@ export default function HomeScreen() {
             <SafeAreaView style={{
                 alignItems: "center",
                 justifyContent: "center",
-                height: "100%"
             }}>
                 <Card></Card>
             </SafeAreaView>
