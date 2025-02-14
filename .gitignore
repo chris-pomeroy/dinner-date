@@ -34,3 +34,6 @@ build/
 
 ### Database ###
 postgres
+
+### Finder ###
+**/.DS_Store
