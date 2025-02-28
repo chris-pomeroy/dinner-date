@@ -1,62 +1,81 @@
 package utils;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
 import java.time.Duration;
-import java.util.List;
-import java.util.Objects;
 
 public class GoodFoodScraper {
 
-    public static void main(String[] args) {
-        WebDriver driver = null;
-        List<GoodFoodRecipe> recipes;
+    private static final String URL = "https://www.bbcgoodfood.com/search?q=Quick+and+easy+family+recipes";
+    private static final int PAGES_TO_SCRAPE = 5;
+    private static final WebDriver DRIVER = new ChromeDriver();
+
+    private static JsonGenerator generator;
+
+
+    public static void main(String[] args) throws IOException {
         try {
-            driver = new ChromeDriver();
-            driver.manage()
+            DRIVER.manage()
                     .timeouts()
                     .implicitlyWait(Duration.ofSeconds(2));
-            recipes = crawl(driver);
+            generator = new JsonFactory().createGenerator(System.out);
+            generator.writeStartArray();
+            for (int c=0; c < PAGES_TO_SCRAPE; c++) {
+                crawl(c);
+            }
         } finally {
-            Objects.requireNonNull(driver).close();
+            DRIVER.close();
+            generator.writeEndArray();
+            generator.close();
         }
-        recipes.forEach(System.out::println);
     }
 
-    private static List<GoodFoodRecipe> crawl(WebDriver driver) {
-        driver.get("https://www.bbcgoodfood.com/search?q=Quick+and+easy+family+recipes");
+    private static void crawl(int page) {
+        DRIVER.get(URL + "?page=" + page);
 
         By cookieIframe = By.cssSelector("[title='SP Consent Message']");
         By cookieButton = By.cssSelector("[title*='Cookies']");
 
-        driver.switchTo().frame(driver.findElement(cookieIframe));
-        List<WebElement> cookieButtonElements = driver.findElements(cookieButton);
-        if (!cookieButtonElements.isEmpty()) {
-            cookieButtonElements.getFirst().click();
+        if (elementExists(cookieIframe)) {
+            DRIVER.switchTo().frame(DRIVER.findElement(cookieIframe));
+            if (elementExists(cookieButton)) {
+                DRIVER.findElement(cookieButton).click();
+            }
+            DRIVER.switchTo().defaultContent();
         }
-        driver.switchTo().defaultContent();
 
         By card = By.className("search-result--list");
         By title = By.className("heading-4");
         By description = By.cssSelector(".card__description > p");
+        By recipeUrl = By.cssSelector(".link.d-block");
         By image = By.className("image__img");
 
+        // TODO output JSON object
+        ObjectMapper mapper = new ObjectMapper();
+
         // TODO filter locked recipes
-        return driver.findElements(card)
+        DRIVER.findElements(card)
                 .stream()
-                .map(element -> {
+                .forEach(element -> {
                     String imageUrl = element.findElement(image).getAttribute("src");
                     if (imageUrl.contains("?")) {
                         imageUrl = imageUrl.substring(0, imageUrl.lastIndexOf("?"));
                     }
-                    return new GoodFoodRecipe(
+                    System.out.println(new GoodFoodRecipe(
                             element.findElement(title).getText(),
                             element.findElement(description).getAttribute("textContent"),
-                            imageUrl);
-                })
-                .toList();
+                            element.findElement(recipeUrl).getAttribute("href"),
+                            imageUrl));
+                });
+    }
+
+    private static boolean elementExists(By element) {
+        return !DRIVER.findElements(element).isEmpty();
     }
 }
