@@ -39,7 +39,7 @@ public class GoodFoodScraper {
     }
 
     private static void crawl(int page) throws IOException {
-        DRIVER.get(URL + "?page=" + page);
+        DRIVER.get(URL + "&page=" + (page + 1));
 
         By cookieIframe = By.cssSelector("[title='SP Consent Message']");
         By cookieButton = By.cssSelector("[title*='Cookies']");
