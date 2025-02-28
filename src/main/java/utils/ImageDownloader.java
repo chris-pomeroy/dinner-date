@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -30,6 +31,10 @@ public class ImageDownloader {
     private static void download(String url) throws IOException, InterruptedException {
         String filename = url.substring(url.lastIndexOf("/") + 1);
         Path destination = Paths.get(DESTINATION_FOLDER + filename);
+
+        if (Files.exists(destination)) {
+            return;
+        }
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))

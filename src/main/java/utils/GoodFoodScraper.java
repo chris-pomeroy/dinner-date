@@ -53,6 +53,7 @@ public class GoodFoodScraper {
         }
 
         By card = By.className("search-result--list");
+        By premium = By.className("premium-identifier");
         By title = By.className("heading-4");
         By description = By.cssSelector(".card__description > p");
         By recipeUrl = By.cssSelector(".link.d-block");
@@ -61,6 +62,10 @@ public class GoodFoodScraper {
         // TODO filter locked recipes
         ObjectWriter writer = new ObjectMapper().writerWithDefaultPrettyPrinter();
         for (WebElement element : DRIVER.findElements(card)) {
+            if (!element.findElements(premium).isEmpty()) {
+                continue;
+            }
+
             String imageUrl = element.findElement(image).getAttribute("src");
             if (imageUrl.contains("?")) {
                 imageUrl = imageUrl.substring(0, imageUrl.lastIndexOf("?"));
