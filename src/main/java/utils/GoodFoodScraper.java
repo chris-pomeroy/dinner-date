@@ -3,8 +3,10 @@ package utils;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
@@ -17,7 +19,6 @@ public class GoodFoodScraper {
     private static final WebDriver DRIVER = new ChromeDriver();
 
     private static JsonGenerator generator;
-
 
     public static void main(String[] args) throws IOException {
         try {
@@ -33,10 +34,11 @@ public class GoodFoodScraper {
             DRIVER.close();
             generator.writeEndArray();
             generator.close();
+            System.out.println();
         }
     }
 
-    private static void crawl(int page) {
+    private static void crawl(int page) throws IOException {
         DRIVER.get(URL + "?page=" + page);
 
         By cookieIframe = By.cssSelector("[title='SP Consent Message']");
@@ -56,23 +58,19 @@ public class GoodFoodScraper {
         By recipeUrl = By.cssSelector(".link.d-block");
         By image = By.className("image__img");
 
-        // TODO output JSON object
-        ObjectMapper mapper = new ObjectMapper();
-
         // TODO filter locked recipes
-        DRIVER.findElements(card)
-                .stream()
-                .forEach(element -> {
-                    String imageUrl = element.findElement(image).getAttribute("src");
-                    if (imageUrl.contains("?")) {
-                        imageUrl = imageUrl.substring(0, imageUrl.lastIndexOf("?"));
-                    }
-                    System.out.println(new GoodFoodRecipe(
-                            element.findElement(title).getText(),
-                            element.findElement(description).getAttribute("textContent"),
-                            element.findElement(recipeUrl).getAttribute("href"),
-                            imageUrl));
-                });
+        ObjectWriter writer = new ObjectMapper().writerWithDefaultPrettyPrinter();
+        for (WebElement element : DRIVER.findElements(card)) {
+            String imageUrl = element.findElement(image).getAttribute("src");
+            if (imageUrl.contains("?")) {
+                imageUrl = imageUrl.substring(0, imageUrl.lastIndexOf("?"));
+            }
+            writer.writeValue(generator, new GoodFoodRecipe(
+                    element.findElement(title).getText(),
+                    element.findElement(description).getAttribute("textContent"),
+                    element.findElement(recipeUrl).getAttribute("href"),
+                    imageUrl));
+        }
     }
 
     private static boolean elementExists(By element) {
