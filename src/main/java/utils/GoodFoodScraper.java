@@ -59,7 +59,6 @@ public class GoodFoodScraper {
         By recipeUrl = By.cssSelector(".link.d-block");
         By image = By.className("image__img");
 
-        // TODO filter locked recipes
         ObjectWriter writer = new ObjectMapper().writerWithDefaultPrettyPrinter();
         for (WebElement element : DRIVER.findElements(card)) {
             if (!element.findElements(premium).isEmpty()) {
