@@ -1,9 +1,5 @@
 package utils;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,28 +13,23 @@ public class GoodFoodScraper {
     private static final String URL = "https://www.bbcgoodfood.com/search?q=Quick+and+easy+family+recipes";
     private static final int PAGES_TO_SCRAPE = 5;
     private static final WebDriver DRIVER = new ChromeDriver();
-
-    private static JsonGenerator generator;
-
-    public static void main(String[] args) throws IOException {
+    private static final String VALUES_SQL = "('%s', '%s', '%s', '%s')";
+    private static final String DESTINATION_FOLDER = "src/main/resources/static/recipe-images/";
+    
+    public static void main(String[] args) throws IOException, InterruptedException {
         try {
             DRIVER.manage()
                     .timeouts()
                     .implicitlyWait(Duration.ofSeconds(2));
-            generator = new JsonFactory().createGenerator(System.out);
-            generator.writeStartArray();
             for (int c=0; c < PAGES_TO_SCRAPE; c++) {
                 crawl(c);
             }
         } finally {
             DRIVER.close();
-            generator.writeEndArray();
-            generator.close();
-            System.out.println();
         }
     }
 
-    private static void crawl(int page) throws IOException {
+    private static void crawl(int page) throws IOException, InterruptedException {
         DRIVER.get(URL + "&page=" + (page + 1));
 
         By cookieIframe = By.cssSelector("[title='SP Consent Message']");
@@ -59,7 +50,6 @@ public class GoodFoodScraper {
         By recipeUrl = By.cssSelector(".link.d-block");
         By image = By.className("image__img");
 
-        ObjectWriter writer = new ObjectMapper().writerWithDefaultPrettyPrinter();
         for (WebElement element : DRIVER.findElements(card)) {
             if (!element.findElements(premium).isEmpty()) {
                 continue;
@@ -69,11 +59,15 @@ public class GoodFoodScraper {
             if (imageUrl.contains("?")) {
                 imageUrl = imageUrl.substring(0, imageUrl.lastIndexOf("?"));
             }
-            writer.writeValue(generator, new GoodFoodRecipe(
-                    element.findElement(title).getText(),
-                    element.findElement(description).getAttribute("textContent"),
-                    element.findElement(recipeUrl).getAttribute("href"),
-                    imageUrl));
+            
+            ImageDownloader.download(imageUrl, DESTINATION_FOLDER);
+
+            System.out.printf(VALUES_SQL + ",%n",
+                    element.findElement(title).getText().replace("'", "''"),
+                    element.findElement(description).getAttribute("textContent").replace("'", "''"),
+                    imageUrl.substring(imageUrl.lastIndexOf("/") + 1),
+                    element.findElement(recipeUrl).getAttribute("href")
+            );
         }
     }
 
