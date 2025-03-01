@@ -13,7 +13,7 @@ public class Recipe {
     @Id
     private Long id;
     private String title;
-    private String instructions;
+    private String description;
     private String imageName;
     private String recipeUrl;
 }
