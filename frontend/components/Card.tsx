@@ -1,8 +1,12 @@
 import {Image, Text, View} from 'react-native';
 import {IconSymbol} from "@/components/ui/IconSymbol";
 import React from "react";
+import {getImageUrl, getRandomRecipe} from "@/api/requests";
+import {useQuery} from "@tanstack/react-query";
 
 export function Card() {
+
+    const {data: recipe} = useQuery({queryKey: ['recipe'], queryFn: getRandomRecipe});
 
     return (
         <View style={{
@@ -22,7 +26,7 @@ export function Card() {
                         width: "100%",
                         height: "100%"
                     }}
-                    source={require('@/assets/images/salmon-poke.jpg')} />
+                    src={getImageUrl(recipe?.imageName || "")} />
                 <View style={{
                     position: "absolute",
                     bottom: 10,
@@ -32,8 +36,8 @@ export function Card() {
                         fontSize: 30,
                         fontWeight: "bold",
                         color: "white"
-                    }}>Salmon Poke Bowl</Text>
-                    <Text style={{color: "white"}}>A taste sensation you'll write home to your parents about</Text>
+                    }}>{recipe?.title}</Text>
+                    <Text style={{color: "white"}}>{recipe?.description}</Text>
                 </View>
             </View>
             <View style={{
