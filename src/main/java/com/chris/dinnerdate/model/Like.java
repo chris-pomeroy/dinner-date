@@ -5,14 +5,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "recipes")
-public class Recipe {
+@Table(name = "likes")
+public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
-    private String imageName;
-    private String recipeUrl;
+    private Long recipeId;
 }

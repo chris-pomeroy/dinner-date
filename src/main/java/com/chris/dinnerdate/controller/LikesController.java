@@ -1,0 +1,19 @@
+package com.chris.dinnerdate.controller;
+
+import com.chris.dinnerdate.service.LikeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+public class LikesController {
+
+    private final LikeService likeService;
+
+    @PostMapping("like")
+    public void postLike(@RequestParam long recipeId) {
+        likeService.likeRecipe(recipeId);
+    }
+}

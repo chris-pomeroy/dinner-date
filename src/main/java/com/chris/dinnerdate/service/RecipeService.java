@@ -16,6 +16,7 @@ public class RecipeService {
         recipeCount = recipeRepository.count();
         this.recipeRepository = recipeRepository;
     }
+
     public Recipe getRandomRecipe() {
         Long randomID = ThreadLocalRandom.current().nextLong(recipeCount) + 1;
         return recipeRepository.findById(randomID)

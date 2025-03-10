@@ -26,7 +26,8 @@ export function Card() {
                         width: "100%",
                         height: "100%"
                     }}
-                    src={getImageUrl(recipe?.imageName || "")} />
+                    src={getImageUrl(recipe?.imageName || "")}
+                />
                 <View style={{
                     position: "absolute",
                     bottom: 10,
