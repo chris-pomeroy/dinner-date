@@ -1,7 +1,7 @@
 import {StyleSheet, SafeAreaView, Text} from 'react-native';
 
 import {SafeAreaProvider} from "react-native-safe-area-context";
-import {Card} from "@/components/Card";
+import {RecipeCard} from "@/components/RecipeCard";
 
 export default function HomeScreen() {
     return (
@@ -10,7 +10,7 @@ export default function HomeScreen() {
                 alignItems: "center",
                 justifyContent: "center",
             }}>
-                <Card></Card>
+                <RecipeCard/>
             </SafeAreaView>
         </SafeAreaProvider>
     );
