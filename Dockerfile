@@ -1,9 +1,11 @@
-FROM maven:3.9.9-amazoncorretto-21 AS build
+FROM maven:3.9.9-amazoncorretto-21
 
 WORKDIR /app
 
 # Copy the Maven wrapper and DB configuration
-COPY pom.xml compose.yaml ./
+COPY pom.xml ./
+
+RUN ["mvn", "dependency:resolve"]
 
 # Copy source code
 COPY src/ src/
@@ -11,10 +13,4 @@ COPY src/ src/
 # Run Spring Boot with hot reloading
 RUN ["mvn", "clean", "install"]
 
-FROM amazoncorretto:21-alpine3.21
-
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar dinner-date.jar
-
-RUN ["java", "-jar", "dinner-date.jar"]
+RUN ["java", "-jar", "./target/*jar"]
