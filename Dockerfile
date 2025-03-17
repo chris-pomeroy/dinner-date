@@ -1,14 +1,18 @@
-FROM maven:3.9.9-amazoncorretto-21
+FROM amazoncorretto:21-alpine3.21-jdk
 
 WORKDIR /app
 
-# Copy the Maven wrapper and DB configuration
-COPY pom.xml ./
+# Copy the Maven wrapper and pom.xml
+COPY pom.xml mvnw ./
+COPY .mvn .mvn
 
-RUN ["mvn", "dependency:resolve"]
+RUN ["./mvnw", "dependency:resolve"]
 
 # Copy source code
 COPY src/ src/
 
-# Run Spring Boot with hot reloading
-CMD ["mvn", "spring-boot:run"]
+# Build JAR file using Maven
+RUN ["./mvnw", "clean", "install"]
+
+# Start the service
+ENTRYPOINT ["java", "-jar", "target/*.jar"]
