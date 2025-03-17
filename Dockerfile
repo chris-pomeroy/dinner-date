@@ -2,8 +2,8 @@ FROM maven:3.9.9-amazoncorretto-21 AS build
 
 WORKDIR /app
 
-# Copy the Maven wrapper and pom.xml
-COPY pom.xml ./
+# Copy the Maven wrapper and DB configuration
+COPY pom.xml compose.yaml ./
 
 # Copy source code
 COPY src/ src/
