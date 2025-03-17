@@ -11,6 +11,4 @@ RUN ["mvn", "dependency:resolve"]
 COPY src/ src/
 
 # Run Spring Boot with hot reloading
-RUN ["mvn", "clean", "install"]
-
-RUN ["java", "-jar", "./target/*jar"]
+CMD ["mvn", "spring-boot:run"]
