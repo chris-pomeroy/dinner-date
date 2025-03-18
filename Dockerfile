@@ -6,7 +6,7 @@ WORKDIR /app
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
 
-RUN ["./mvnw", "dependency:resolve"]
+RUN ["./mvnw", "dependency:go-offline"]
 
 # Copy source code
 COPY src/ src/
@@ -14,5 +14,8 @@ COPY src/ src/
 # Build JAR file using Maven
 RUN ["./mvnw", "clean", "install"]
 
+# Rename the JAR file
+RUN mv target/*.jar service.jar
+
 # Start the service
-ENTRYPOINT ["java", "-jar", "target/*.jar"]
+ENTRYPOINT ["java", "-jar", "service.jar"]
