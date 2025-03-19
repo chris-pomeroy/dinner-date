@@ -1,7 +1,8 @@
 import Constants from "expo-constants";
 
-const devServer = Constants.expoConfig?.hostUri ? Constants.expoConfig.hostUri.split(':')[0] : "localhost";
-const api = `http://${devServer}:8080`;
+// const devServer = Constants.expoConfig?.hostUri ? Constants.expoConfig.hostUri.split(':')[0] : "localhost";
+// const api = `http://${devServer}:8080`;
+const api = `https://dinner-date.onrender.com`;
 
 type Recipe = {
     id: number;
