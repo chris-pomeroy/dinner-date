@@ -6,7 +6,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function RecipeCard() {
 
-    const DX_THRESHOLD = 50;
+    const DX_THRESHOLD = 100;
 
     const { data: recipe, refetch } = useQuery<Recipe>({ queryKey: ['recipe'], queryFn: getRandomRecipe });
 
