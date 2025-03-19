@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function RecipeCard() {
 
-    const DX_THRESHOLD = 20;
+    const DX_THRESHOLD = 50;
 
     const { data: recipe } = useQuery({ queryKey: ['recipe'], queryFn: getRandomRecipe });
 
@@ -50,6 +50,23 @@ export function RecipeCard() {
                     fontWeight: "bold",
                     color: "green"
                 }}>LIKE</Text>
+            </View>
+            <View style={{
+                position: "absolute",
+                top: 25,
+                right: 20,
+                padding: 5,
+                borderWidth: 5,
+                borderColor: "red",
+                borderRadius: 10,
+                transform: [{rotate: "15deg"}],
+                display: dx < -DX_THRESHOLD ? "flex" : "none"
+            }}>
+                <Text style={{
+                    fontSize: 60,
+                    fontWeight: "bold",
+                    color: "red"
+                }}>NOPE</Text>
             </View>
             <View style={{
                 position: "absolute",
