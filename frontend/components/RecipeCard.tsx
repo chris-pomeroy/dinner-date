@@ -1,22 +1,43 @@
 import { Animated, Image, PanResponder, Text, View } from 'react-native';
 
-import React, { useRef, useState } from "react";
-import { getImageUrl, getRandomRecipe } from "@/api/requests";
-import { useQuery } from "@tanstack/react-query";
+import React, { useMemo, useRef, useState } from "react";
+import { dislikeRecipe, getImageUrl, getRandomRecipe, likeRecipe, Recipe } from "@/api/requests";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function RecipeCard() {
 
     const DX_THRESHOLD = 50;
 
-    const { data: recipe } = useQuery({ queryKey: ['recipe'], queryFn: getRandomRecipe });
+    const { data: recipe, refetch } = useQuery<Recipe>({ queryKey: ['recipe'], queryFn: getRandomRecipe });
+
+    const { mutate: like } = useMutation({
+        mutationFn: (id: number) => likeRecipe(id)
+    })
+
+    const { mutate: dislike } = useMutation({
+        mutationFn: (id: number) => dislikeRecipe(id)
+    })
 
     const [dx, setDx] = useState(0);
 
-    const panResponder = useRef(PanResponder.create({
+    const panResponder = useMemo(() => PanResponder.create({
         onMoveShouldSetPanResponder: () => true,
         onPanResponderMove: (_, gestureState) => setDx(gestureState.dx),
-        onPanResponderRelease: () => setDx(0)
-    })).current;
+        onPanResponderRelease: (_, gestureState) => {
+            if (!recipe) {
+                return
+            }
+            if (gestureState.dx > DX_THRESHOLD) {
+                like(recipe.id)
+                refetch()
+            }
+            if (gestureState.dx < -DX_THRESHOLD) {
+                dislike(recipe.id)
+                refetch()
+            }
+            setDx(0)
+        }
+    }), [recipe]);
 
     return (
         <View {...panResponder.panHandlers} style={{
