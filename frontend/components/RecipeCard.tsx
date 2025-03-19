@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 
 export function RecipeCard() {
 
+    const DX_THRESHOLD = 20;
+
     const { data: recipe } = useQuery({ queryKey: ['recipe'], queryFn: getRandomRecipe });
 
     const [dx, setDx] = useState(0);
@@ -26,13 +28,29 @@ export function RecipeCard() {
             position: "relative",
             left: dx
         }}>
-            <Image
-                style={{
-                    width: "100%",
-                    height: "100%"
-                }}
+            <Image style={{
+                width: "100%",
+                height: "100%"
+            }}
                 src={getImageUrl(recipe?.imageName || "")}
             />
+            <View style={{
+                position: "absolute",
+                top: 25,
+                left: 20,
+                padding: 5,
+                borderWidth: 5,
+                borderColor: "green",
+                borderRadius: 10,
+                transform: [{rotate: "-15deg"}],
+                display: dx > DX_THRESHOLD ? "flex" : "none"
+            }}>
+                <Text style={{
+                    fontSize: 60,
+                    fontWeight: "bold",
+                    color: "green"
+                }}>LIKE</Text>
+            </View>
             <View style={{
                 position: "absolute",
                 bottom: 10,
