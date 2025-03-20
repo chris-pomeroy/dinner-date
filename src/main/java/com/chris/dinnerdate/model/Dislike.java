@@ -13,6 +13,18 @@ public class Dislike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long recipeId;
+
+    @Column(nullable = false, insertable = false, updatable = false)
     private LocalDateTime timeStamp;
+
+    @ManyToOne
+    private Recipe recipe;
+
+    public static Dislike withRecipeId(long recipeId) {
+        Recipe recipe = new Recipe();
+        recipe.setId(recipeId);
+        Dislike dislike = new Dislike();
+        dislike.setRecipe(recipe);
+        return dislike;
+    }
 }

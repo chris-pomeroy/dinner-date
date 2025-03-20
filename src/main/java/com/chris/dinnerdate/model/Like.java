@@ -13,6 +13,18 @@ public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long recipeId;
+
+    @Column(nullable = false, insertable = false, updatable = false)
     private LocalDateTime timeStamp;
+
+    @ManyToOne
+    private Recipe recipe;
+
+    public static Like withRecipeId(long recipeId) {
+        Recipe recipe = new Recipe();
+        recipe.setId(recipeId);
+        Like like = new Like();
+        like.setRecipe(recipe);
+        return like;
+    }
 }

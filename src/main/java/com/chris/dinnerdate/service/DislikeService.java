@@ -15,9 +15,7 @@ public class DislikeService {
     private final DislikeRepository dislikeRepository;
 
     public void dislikeRecipe(long recipeId) {
-        Dislike dislike = new Dislike();
-        dislike.setRecipeId(recipeId);
-        dislikeRepository.save(dislike);
+        dislikeRepository.save(Dislike.withRecipeId(recipeId));
     }
 
     public List<Dislike> getDislikes() {
