@@ -47,7 +47,8 @@ export function RecipeCard() {
             width: "90%",
             height: "90%",
             position: "relative",
-            left: dx
+            left: dx,
+            transform: [{rotate: `${dx * 0.03}deg`}]
         }}>
             <Image style={{
                 width: "100%",
