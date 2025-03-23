@@ -1,6 +1,5 @@
 package com.chris.dinnerdate.service;
 
-import com.chris.dinnerdate.model.Dislike;
 import com.chris.dinnerdate.model.Like;
 import com.chris.dinnerdate.repository.LikeRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +20,10 @@ public class LikeService {
         likeRepository.save(Like.withRecipeId(recipeId));
     }
 
-    public List<Like> getLikes() {
-        Sort sort = TypedSort.sort(Dislike.class)
-                .by(Dislike::getTimeStamp)
+    public List<Like> getLikes(int page) {
+        Sort sort = TypedSort.sort(Like.class)
+                .by(Like::getTimeStamp)
                 .descending();
-        return likeRepository.findBy(PageRequest.of(0, 10, sort));
+        return likeRepository.findBy(PageRequest.of(page, 10, sort));
     }
 }

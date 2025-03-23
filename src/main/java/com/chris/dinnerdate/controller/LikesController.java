@@ -22,7 +22,7 @@ public class LikesController {
     }
 
     @GetMapping("likes")
-    public List<Like> getLikes() {
-        return likeService.getLikes();
+    public List<Like> getLikes(@RequestParam(defaultValue = "0") int page) {
+        return likeService.getLikes(page);
     }
 }

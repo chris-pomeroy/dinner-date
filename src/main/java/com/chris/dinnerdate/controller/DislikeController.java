@@ -22,7 +22,7 @@ public class DislikeController {
     }
 
     @GetMapping("dislikes")
-    public List<Dislike> getDislikes() {
-        return dislikeService.getDislikes();
+    public List<Dislike> getDislikes(@RequestParam(defaultValue = "0") int page) {
+        return dislikeService.getDislikes(page);
     }
 }
