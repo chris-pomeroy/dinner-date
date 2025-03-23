@@ -1,11 +1,14 @@
 package com.chris.dinnerdate.service;
 
+import com.chris.dinnerdate.model.Dislike;
 import com.chris.dinnerdate.model.Like;
 import com.chris.dinnerdate.repository.LikeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,8 +22,9 @@ public class LikeService {
     }
 
     public List<Like> getLikes() {
-        List<Like> likes = new ArrayList<>();
-        likeRepository.findAll().forEach(likes::add);
-        return likes;
+        Sort sort = TypedSort.sort(Dislike.class)
+                .by(Dislike::getTimeStamp)
+                .descending();
+        return likeRepository.findBy(PageRequest.of(0, 10, sort));
     }
 }
