@@ -1,6 +1,6 @@
-import { Animated, Image, PanResponder, Text, View } from 'react-native';
+import { Image, PanResponder, Text, View } from 'react-native';
 
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { dislikeRecipe, getImageUrl, getRandomRecipe, likeRecipe, Recipe } from "@/api/requests";
 import { useMutation, useQuery } from "@tanstack/react-query";
 

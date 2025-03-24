@@ -32,3 +32,14 @@ export async function dislikeRecipe(recipeId: number) {
 export function getImageUrl(imageName: string) {
     return `${api}/recipe-images/${imageName}`;
 }
+
+export type Like = {
+    id: number;
+    timeStamp: Date;
+    recipe: Recipe;
+}
+
+export async function getLikes(page = 0) : Promise<Like[]> {
+    const response = await fetch(`${api}/likes?page=${page}`)
+    return await response.json()
+}
