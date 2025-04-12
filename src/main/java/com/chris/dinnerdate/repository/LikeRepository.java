@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface LikeRepository extends CrudRepository<Like, Long> {
 
-    public List<Like> findBy(Pageable pageable);
+    List<Like> findBy(Pageable pageable);
 }
