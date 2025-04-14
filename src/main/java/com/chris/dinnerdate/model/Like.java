@@ -1,5 +1,6 @@
 package com.chris.dinnerdate.model;
 
+import com.chris.dinnerdate.config.UserContext;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,11 +21,17 @@ public class Like {
     @ManyToOne
     private Recipe recipe;
 
+    @ManyToOne
+    private User user;
+
     public static Like withRecipeId(long recipeId) {
         Recipe recipe = new Recipe();
         recipe.setId(recipeId);
         Like like = new Like();
         like.setRecipe(recipe);
+        User user = new User();
+        user.setId(UserContext.getId());
+        like.setUser(user);
         return like;
     }
 }
