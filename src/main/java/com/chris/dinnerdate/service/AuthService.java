@@ -1,5 +1,6 @@
 package com.chris.dinnerdate.service;
 
+import com.chris.dinnerdate.config.UserContext;
 import com.chris.dinnerdate.model.User;
 import com.chris.dinnerdate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +51,9 @@ public class AuthService {
         user.setSessionId(sessionID);
         userRepository.save(user);
         return sessionID;
+    }
+
+    public void logout() {
+        userRepository.clearSession(UserContext.getId());
     }
 }

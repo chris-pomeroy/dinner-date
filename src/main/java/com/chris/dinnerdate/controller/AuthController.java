@@ -26,4 +26,9 @@ public class AuthController {
         String sessionID = authService.login(authRequest.email(), authRequest.password());
         return new LoginResponse(sessionID);
     }
+
+    @PostMapping("/logout")
+    public void logout() {
+        authService.logout();
+    }
 }
