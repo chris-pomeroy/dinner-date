@@ -24,7 +24,8 @@ public class AuthFilter extends OncePerRequestFilter {
     private static final Map<String, HttpMethod> WHITELIST = Map.of(
             "/login", HttpMethod.POST,
             "/register", HttpMethod.POST,
-            "/health", HttpMethod.GET
+            "/health", HttpMethod.GET,
+            "/recipe-images/", HttpMethod.GET
     );
 
     private static final String BEARER_PREFIX = "Bearer ";
@@ -64,9 +65,9 @@ public class AuthFilter extends OncePerRequestFilter {
 
     private boolean isWhitelisted(HttpServletRequest request) {
         String path = request.getRequestURI();
-        if (!WHITELIST.containsKey(path)) {
-            return false;
-        }
-        return WHITELIST.get(path).toString().equals(request.getMethod());
+        String method = request.getMethod();
+        return WHITELIST.entrySet()
+                .stream()
+                .anyMatch(entry -> path.startsWith(entry.getKey()) && method.equals(entry.getValue().toString()));
     }
 }
