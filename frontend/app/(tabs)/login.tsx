@@ -1,7 +1,15 @@
 import {SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Text} from 'react-native';
 import {useState} from "react";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {login} from "@/api/requests";
 
 export default function LoginScreen() {
+
+    const {mutate: postLogin} = useMutation({
+        mutationFn: login
+    })
+
+    const queryClient = useQueryClient()
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,19 +28,25 @@ export default function LoginScreen() {
             />
             <TextInput
                 secureTextEntry={true}
+                returnKeyType='done'
                 style={styles.input}
                 value={password}
                 onChangeText={setPassword}
                 placeholder="Password"
             />
-            <TouchableOpacity style={{
-                height: 50,
-                width: "80%",
-                backgroundColor: "lightblue",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 10,
-            }}>
+            <TouchableOpacity
+                onPress={() => {
+                    postLogin({email, password})
+                    queryClient.refetchQueries()
+                }}
+                style={{
+                    height: 50,
+                    width: "80%",
+                    backgroundColor: "lightblue",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 10,
+                }}>
                 <Text style={{
                     fontWeight: "bold"
                 }}>Sign in</Text>
