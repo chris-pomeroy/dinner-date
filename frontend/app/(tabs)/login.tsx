@@ -25,6 +25,10 @@ export default function LoginScreen() {
                 value={email}
                 onChangeText={setEmail}
                 placeholder="Email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoComplete="email"
+                textContentType="emailAddress"
             />
             <TextInput
                 secureTextEntry={true}
