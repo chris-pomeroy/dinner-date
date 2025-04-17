@@ -1,4 +1,3 @@
-// import Constants from "expo-constants";
 
 // const devServer = Constants.expoConfig?.hostUri ? Constants.expoConfig.hostUri.split(':')[0] : "localhost";
 // const api = `http://${devServer}:8080`;
@@ -42,4 +41,12 @@ export type Like = {
 export async function getLikes(page = 0) : Promise<Like[]> {
     const response = await fetch(`${api}/likes?page=${page}`)
     return await response.json()
+}
+
+export async function login(email: string, password: string) {
+    const response = await fetch(`${api}/login`, {
+        method: "POST",
+        body: JSON.stringify({email, password})
+    })
+    console.log(response.headers.get("Authorization"));
 }
