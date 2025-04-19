@@ -51,3 +51,11 @@ export type Like = {
 export function getLikes(page = 0) : Promise<Like[]> {
     return authFetch(`/likes?page=${page}`)
 }
+
+export type Me = {
+    email: string
+}
+
+export function getMe() : Promise<Me> {
+    return authFetch(`/me`)
+}

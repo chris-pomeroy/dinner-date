@@ -2,6 +2,7 @@ import {Image, Linking, Text, TouchableOpacity, View} from "react-native";
 import {Like} from "@/api/requests";
 import React from "react";
 import {getImageUrl} from "@/api/authFetch";
+import {openBrowserAsync} from "expo-web-browser";
 
 type Props = {
     like: Like;
@@ -10,7 +11,7 @@ type Props = {
 export default function MatchResult({like}: Props) {
     return (
         <TouchableOpacity
-            onPress={() => Linking.openURL(like.recipe.recipeUrl)}
+            onPress={() => openBrowserAsync(like.recipe.recipeUrl)}
             style={{
                 width: "100%",
                 flexDirection: "row",
