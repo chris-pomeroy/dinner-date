@@ -1,8 +1,9 @@
 import { Image, PanResponder, Text, View } from 'react-native';
 
 import React, { useMemo, useState } from "react";
-import { dislikeRecipe, getImageUrl, getRandomRecipe, likeRecipe, Recipe } from "@/api/requests";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { dislikeRecipe, getRandomRecipe, likeRecipe, Recipe } from "@/api/requests";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {getImageUrl} from "@/api/authFetch";
 
 export function RecipeCard() {
 

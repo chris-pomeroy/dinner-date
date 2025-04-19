@@ -1,6 +1,7 @@
 import {Image, Linking, Text, TouchableOpacity, View} from "react-native";
-import {getImageUrl, Like} from "@/api/requests";
+import {Like} from "@/api/requests";
 import React from "react";
+import {getImageUrl} from "@/api/authFetch";
 
 type Props = {
     like: Like;
