@@ -5,14 +5,15 @@ import {login} from "@/api/requests";
 
 export default function LoginScreen() {
 
-    const {mutate: postLogin} = useMutation({
-        mutationFn: login
-    })
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const queryClient = useQueryClient()
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const {mutate: postLogin} = useMutation({
+        mutationFn: login,
+        onSuccess: () => queryClient.refetchQueries()
+    })
 
     return (
         <SafeAreaView style={{
@@ -39,10 +40,7 @@ export default function LoginScreen() {
                 placeholder="Password"
             />
             <TouchableOpacity
-                onPress={() => {
-                    postLogin({email, password})
-                    queryClient.refetchQueries()
-                }}
+                onPress={() => postLogin({email, password})}
                 style={{
                     height: 50,
                     width: "80%",
