@@ -45,7 +45,7 @@ export const authFetch = async <T>(
     return body as T;
 };
 
-export const authPost = <T,S>(
+export const authPost = <T>(
     input: string,
     init: RequestInit = {}
 ): Promise<T> => {

@@ -13,7 +13,7 @@ type LoginResponse = {
 export const useLoginMutation = () => {
     const queryClient = useQueryClient();
 
-    return  useMutation({
+    return useMutation({
         mutationFn: async (req: LoginRequest) => {
             const response : LoginResponse = await authFetch(`/login`, {
                 method: "POST",

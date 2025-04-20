@@ -1,13 +1,14 @@
-import {SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Text} from 'react-native';
+import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import {useState} from "react";
 import {useLoginMutation} from "@/hooks/mutations/useLoginMutation";
+import Button from "@/components/Button";
 
 export default function LoginScreen() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {mutate: postLogin} = useLoginMutation();
+    const {mutate: postLogin, isError, isPending} = useLoginMutation();
 
     return (
         <SafeAreaView style={{
@@ -33,20 +34,12 @@ export default function LoginScreen() {
                 onChangeText={setPassword}
                 placeholder="Password"
             />
-            <TouchableOpacity
+            <Button
                 onPress={() => postLogin({email, password})}
-                style={{
-                    height: 50,
-                    width: "80%",
-                    backgroundColor: "lightblue",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 10,
-                }}>
-                <Text style={{
-                    fontWeight: "bold"
-                }}>Sign in</Text>
-            </TouchableOpacity>
+                text="Sign in"
+                isError={isError}
+                isLoading={isPending}
+            />
         </SafeAreaView>
     );
 }
