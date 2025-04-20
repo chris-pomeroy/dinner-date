@@ -9,6 +9,6 @@ export const useMeQuery = () => {
 
     return {
         ...query,
-        isLoggedIn: query.isSuccess && query.data.email,
+        isLoggedIn: query.data?.email,
     };
 };
