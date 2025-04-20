@@ -1,6 +1,6 @@
 import {SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Text} from 'react-native';
 import {useState} from "react";
-import {useLoginMutation} from "@/hooks/useLoginMutation";
+import {useLoginMutation} from "@/hooks/mutations/useLoginMutation";
 
 export default function LoginScreen() {
 

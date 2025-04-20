@@ -1,6 +1,6 @@
 import {FlatList, SafeAreaView} from 'react-native';
 import MatchResult from "@/components/MatchResult";
-import {useLikesQuery} from "@/hooks/useLikesQuery";
+import {useLikesQuery} from "@/hooks/queries/useLikesQuery";
 
 export default function MatchesScreen() {
 

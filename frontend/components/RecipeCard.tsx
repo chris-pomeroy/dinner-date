@@ -2,9 +2,9 @@ import {Image, PanResponder, Text, View} from 'react-native';
 
 import React, {useMemo, useState} from "react";
 import {getImageUrl} from "@/api/authFetch";
-import {useRandomRecipeQuery} from "@/hooks/useRandomRecipeQuery";
-import {useLikeMutation} from "@/hooks/useLikeMutation";
-import {useDislikeMutation} from "@/hooks/useDislikeMutation";
+import {useRandomRecipeQuery} from "@/hooks/queries/useRandomRecipeQuery";
+import {useLikeMutation} from "@/hooks/mutations/useLikeMutation";
+import {useDislikeMutation} from "@/hooks/mutations/useDislikeMutation";
 
 export function RecipeCard() {
 

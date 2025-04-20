@@ -1,6 +1,6 @@
 import {useQuery} from "@tanstack/react-query";
 import {authFetch} from "@/api/authFetch";
-import {Recipe} from "@/hooks/useRandomRecipeQuery";
+import {Recipe} from "@/hooks/queries/useRandomRecipeQuery";
 
 export type Like = {
     id: number;

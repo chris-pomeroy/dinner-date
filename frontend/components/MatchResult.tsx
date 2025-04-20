@@ -2,7 +2,7 @@ import {Image, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
 import {getImageUrl} from "@/api/authFetch";
 import {openBrowserAsync} from "expo-web-browser";
-import {Like} from "@/hooks/useLikesQuery";
+import {Like} from "@/hooks/queries/useLikesQuery";
 
 type Props = {
     like: Like;

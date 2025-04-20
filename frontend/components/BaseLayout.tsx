@@ -1,6 +1,6 @@
 import {Stack} from "expo-router";
 import {StatusBar} from "expo-status-bar";
-import {useMeQuery} from "@/hooks/useMeQuery";
+import {useMeQuery} from "@/hooks/queries/useMeQuery";
 import LoginScreen from "@/components/LoginScreen";
 
 export default function BaseLayout() {
