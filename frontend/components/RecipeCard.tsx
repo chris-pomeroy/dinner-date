@@ -1,23 +1,18 @@
-import { Image, PanResponder, Text, View } from 'react-native';
+import {Image, PanResponder, Text, View} from 'react-native';
 
-import React, { useMemo, useState } from "react";
-import { dislikeRecipe, getRandomRecipe, likeRecipe, Recipe } from "@/api/requests";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import React, {useMemo, useState} from "react";
 import {getImageUrl} from "@/api/authFetch";
+import {useRandomRecipeQuery} from "@/hooks/useRandomRecipeQuery";
+import {useLikeMutation} from "@/hooks/useLikeMutation";
+import {useDislikeMutation} from "@/hooks/useDislikeMutation";
 
 export function RecipeCard() {
 
     const DX_THRESHOLD = 100;
 
-    const { data: recipe, refetch } = useQuery<Recipe>({ queryKey: ['recipe'], queryFn: getRandomRecipe });
-
-    const { mutate: like } = useMutation({
-        mutationFn: (id: number) => likeRecipe(id)
-    })
-
-    const { mutate: dislike } = useMutation({
-        mutationFn: (id: number) => dislikeRecipe(id)
-    })
+    const {data: recipe, refetch} = useRandomRecipeQuery();
+    const {mutate: like} = useLikeMutation();
+    const {mutate: dislike} = useDislikeMutation();
 
     const [dx, setDx] = useState(0);
 
@@ -55,7 +50,7 @@ export function RecipeCard() {
                 width: "100%",
                 height: "100%"
             }}
-                src={getImageUrl(recipe?.imageName || "")}
+                   src={getImageUrl(recipe?.imageName || "")}
             />
             <View style={{
                 position: "absolute",
@@ -102,7 +97,7 @@ export function RecipeCard() {
                     fontWeight: "bold",
                     color: "white"
                 }}>{recipe?.title}</Text>
-                <Text style={{ color: "white" }}>{recipe?.description}</Text>
+                <Text style={{color: "white"}}>{recipe?.description}</Text>
             </View>
         </View>
     );

@@ -45,6 +45,16 @@ export const authFetch = async <T>(
     return body as T;
 };
 
+export const authPost = <T,S>(
+    input: string,
+    init: RequestInit = {}
+): Promise<T> => {
+    return authFetch(input, {
+        method: "POST",
+        ...init,
+    })
+}
+
 export function getImageUrl(imageName: string) {
     return `${api}/recipe-images/${imageName}`;
 }

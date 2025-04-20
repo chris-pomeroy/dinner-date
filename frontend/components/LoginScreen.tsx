@@ -1,19 +1,13 @@
 import {SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Text} from 'react-native';
 import {useState} from "react";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {login} from "@/api/requests";
+import {useLoginMutation} from "@/hooks/useLoginMutation";
 
 export default function LoginScreen() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const queryClient = useQueryClient()
-
-    const {mutate: postLogin} = useMutation({
-        mutationFn: login,
-        onSuccess: () => queryClient.refetchQueries()
-    })
+    const {mutate: postLogin} = useLoginMutation();
 
     return (
         <SafeAreaView style={{

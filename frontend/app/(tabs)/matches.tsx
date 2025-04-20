@@ -1,11 +1,10 @@
 import {FlatList, SafeAreaView} from 'react-native';
-import {useQuery} from "@tanstack/react-query";
-import {getLikes, Like} from "@/api/requests";
 import MatchResult from "@/components/MatchResult";
+import {useLikesQuery} from "@/hooks/useLikesQuery";
 
 export default function MatchesScreen() {
 
-  const { data: likes } = useQuery<Like[]>({ queryKey: ['likes'], queryFn: () => getLikes() });
+  const { data: likes } = useLikesQuery()
 
   return (
       <SafeAreaView>

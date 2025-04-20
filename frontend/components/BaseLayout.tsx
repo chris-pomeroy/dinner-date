@@ -1,11 +1,11 @@
 import {Stack} from "expo-router";
 import {StatusBar} from "expo-status-bar";
-import {useAuth} from "@/hooks/useAuth";
+import {useMeQuery} from "@/hooks/useMeQuery";
 import LoginScreen from "@/components/LoginScreen";
 
 export default function BaseLayout() {
 
-    const {isLoggedIn} = useAuth();
+    const {isLoggedIn} = useMeQuery();
 
     if (!isLoggedIn) {
         return <LoginScreen />
