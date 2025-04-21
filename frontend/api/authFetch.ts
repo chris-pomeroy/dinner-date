@@ -1,12 +1,17 @@
 // const devServer = Constants.expoConfig?.hostUri ? Constants.expoConfig.hostUri.split(':')[0] : "localhost";
 // const api = `http://${devServer}:8080`;
+import {getItemAsync, setItemAsync} from "expo-secure-store";
+
+const SECURE_STORE_KEY = "sessionId";
+
 const api = `https://dinner-date.onrender.com`;
 
 let authToken: string | null = null;
 
-export const setAuthToken = (token: string | null) => {
-    authToken = token;
-};
+export const setAuthToken = (token: string) => {
+    authToken = token
+    return setItemAsync(SECURE_STORE_KEY, token)
+}
 
 export class FetchError extends Error {
     status: number;
@@ -23,6 +28,10 @@ export const authFetch = async <T>(
     input: string,
     init: RequestInit = {}
 ): Promise<T> => {
+
+    if (!authToken) {
+        authToken = await getItemAsync(SECURE_STORE_KEY);
+    }
 
     const res = await fetch(api + input, {
         ...init,

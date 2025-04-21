@@ -19,7 +19,7 @@ export const useLoginMutation = () => {
                 method: "POST",
                 body: JSON.stringify(req)
             })
-            setAuthToken(response.sessionId)
+            await setAuthToken(response.sessionId)
             return response
         },
         onSuccess: () => queryClient.refetchQueries()
