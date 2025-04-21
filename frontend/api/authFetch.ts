@@ -1,6 +1,6 @@
 // const devServer = Constants.expoConfig?.hostUri ? Constants.expoConfig.hostUri.split(':')[0] : "localhost";
 // const api = `http://${devServer}:8080`;
-import {getItemAsync, setItemAsync} from "expo-secure-store";
+import {deleteItemAsync, getItemAsync, setItemAsync} from "expo-secure-store";
 
 const SECURE_STORE_KEY = "sessionId";
 
@@ -11,6 +11,11 @@ let authToken: string | null = null;
 export const setAuthToken = (token: string) => {
     authToken = token
     return setItemAsync(SECURE_STORE_KEY, token)
+}
+
+export const clearAuthToken = () => {
+    authToken = null;
+    return deleteItemAsync(SECURE_STORE_KEY);
 }
 
 export class FetchError extends Error {

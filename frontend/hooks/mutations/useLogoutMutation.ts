@@ -1,4 +1,4 @@
-import {authPost, setAuthToken} from "@/api/authFetch";
+import {authPost, clearAuthToken} from "@/api/authFetch";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 export default function() {
@@ -7,7 +7,7 @@ export default function() {
     return useMutation({
         mutationFn: async () => {
             await authPost("/logout")
-            setAuthToken(null)
+            await clearAuthToken()
             await queryClient.setQueryData(['me'], null);
         }
     })
