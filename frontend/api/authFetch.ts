@@ -23,15 +23,14 @@ export const authFetch = async <T>(
     input: string,
     init: RequestInit = {}
 ): Promise<T> => {
-    const headers: HeadersInit = {
-        'Content-Type': 'application/json',
-        ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
-        ...init.headers,
-    };
 
     const res = await fetch(api + input, {
         ...init,
-        headers,
+        headers: {
+            'Content-Type': 'application/json',
+            ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+            ...init.headers,
+        },
     });
 
     const contentType = res.headers.get('content-type');
