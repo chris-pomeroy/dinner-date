@@ -2,6 +2,7 @@ import {SafeAreaView, StyleSheet, TextInput, Text, Pressable} from 'react-native
 import {useState} from "react";
 import {useLoginMutation} from "@/hooks/mutations/useLoginMutation";
 import Button from "@/components/Button";
+import {useRegisterMutation} from "@/hooks/mutations/useRegisterMutation";
 
 type Props = {
     hideRegisterScreen: () => void;
@@ -13,7 +14,7 @@ export default function RegisterScreen({hideRegisterScreen}: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {mutate: postLogin, isError, isPending} = useLoginMutation();
+    const {mutate: postRegister, isError, isPending} = useRegisterMutation();
 
     return (
         <SafeAreaView style={{
@@ -48,7 +49,7 @@ export default function RegisterScreen({hideRegisterScreen}: Props) {
                 placeholder="Password"
             />
             <Button
-                onPress={() => postLogin({email, password})}
+                onPress={() => postRegister({firstName, email, password})}
                 text="Register"
                 isError={isError}
                 isLoading={isPending}

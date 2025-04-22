@@ -1,4 +1,4 @@
-import {authFetch, setAuthToken} from "@/api/authFetch";
+import {authPost, setAuthToken} from "@/api/authFetch";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 export type LoginRequest = {
@@ -15,8 +15,7 @@ export const useLoginMutation = () => {
 
     return useMutation({
         mutationFn: async (req: LoginRequest) => {
-            const response : LoginResponse = await authFetch(`/login`, {
-                method: "POST",
+            const response : LoginResponse = await authPost(`/login`, {
                 body: JSON.stringify(req)
             })
             await setAuthToken(response.sessionId)
