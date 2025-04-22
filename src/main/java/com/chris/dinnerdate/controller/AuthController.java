@@ -12,11 +12,11 @@ public class AuthController {
 
     private final AuthService authService;
 
-    public record AuthRequest(String email, String password) {}
+    public record AuthRequest(String firstName, String email, String password) {}
 
     @PostMapping("/register")
     public void register(@RequestBody AuthRequest authRequest) {
-        authService.registerUser(authRequest.email(), authRequest.password());
+        authService.registerUser(authRequest);
     }
 
     public record LoginResponse(String sessionId) {}

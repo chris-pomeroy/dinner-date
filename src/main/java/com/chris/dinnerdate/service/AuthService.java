@@ -1,6 +1,7 @@
 package com.chris.dinnerdate.service;
 
 import com.chris.dinnerdate.config.UserContext;
+import com.chris.dinnerdate.controller.AuthController.AuthRequest;
 import com.chris.dinnerdate.model.User;
 import com.chris.dinnerdate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +23,15 @@ public class AuthService {
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder().withoutPadding();
 
-    public void registerUser(String email, String password) {
-        if (userRepository.existsByEmail(email)) {
+    public void registerUser(AuthRequest authRequest) {
+        if (userRepository.existsByEmail(authRequest.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email address already in use");
         }
 
         User user = new User();
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setFirstName(authRequest.firstName());
+        user.setEmail(authRequest.email());
+        user.setPassword(passwordEncoder.encode(authRequest.password()));
 
         userRepository.save(user);
     }
