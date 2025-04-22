@@ -1,21 +1,19 @@
-import {Pressable, SafeAreaView, StyleSheet, Text, TextInput} from 'react-native';
+import {SafeAreaView, StyleSheet, TextInput, Text, Pressable} from 'react-native';
 import {useState} from "react";
 import {useLoginMutation} from "@/hooks/mutations/useLoginMutation";
 import Button from "@/components/Button";
-import RegisterScreen from "@/components/RegisterScreen";
 
-export default function LoginScreen() {
+type Props = {
+    hideRegisterScreen: () => void;
+}
 
+export default function RegisterScreen({hideRegisterScreen}: Props) {
+
+    const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [showRegisterScreen, setShowRegisterScreen] = useState(false);
-
     const {mutate: postLogin, isError, isPending} = useLoginMutation();
-
-    if (showRegisterScreen) {
-        return <RegisterScreen hideRegisterScreen={() => setShowRegisterScreen(false)} />;
-    }
 
     return (
         <SafeAreaView style={{
@@ -23,6 +21,14 @@ export default function LoginScreen() {
             justifyContent: "center",
             height: "100%"
         }}>
+            <TextInput
+                style={styles.input}
+                value={firstName}
+                onChangeText={setFirstName}
+                placeholder="First name"
+                autoComplete="name-given"
+                textContentType="name"
+            />
             <TextInput
                 style={styles.input}
                 value={email}
@@ -43,7 +49,7 @@ export default function LoginScreen() {
             />
             <Button
                 onPress={() => postLogin({email, password})}
-                text="Sign in"
+                text="Register"
                 isError={isError}
                 isLoading={isPending}
             />
@@ -51,12 +57,12 @@ export default function LoginScreen() {
                 marginTop: 30,
 
             }}>
-                Don't have an account?{" "}
-                <Pressable onPress={() => setShowRegisterScreen(true)}>
+                Already have an account?{" "}
+                <Pressable onPress={hideRegisterScreen}>
                     <Text style={{
                         textDecorationLine: "underline"
                     }}>
-                        Sign up
+                        Sign in
                     </Text>
                 </Pressable>
             </Text>
