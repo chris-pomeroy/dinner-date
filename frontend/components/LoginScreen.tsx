@@ -49,7 +49,6 @@ export default function LoginScreen() {
             />
             <Text style={{
                 marginTop: 30,
-
             }}>
                 Don't have an account?{" "}
                 <Pressable onPress={() => setShowRegisterScreen(true)}>

@@ -27,7 +27,7 @@ export default function RegisterScreen({hideRegisterScreen}: Props) {
                 value={firstName}
                 onChangeText={setFirstName}
                 placeholder="First name"
-                autoComplete="name-given"
+                autoComplete="given-name"
                 textContentType="name"
             />
             <TextInput
@@ -56,7 +56,6 @@ export default function RegisterScreen({hideRegisterScreen}: Props) {
             />
             <Text style={{
                 marginTop: 30,
-
             }}>
                 Already have an account?{" "}
                 <Pressable onPress={hideRegisterScreen}>
