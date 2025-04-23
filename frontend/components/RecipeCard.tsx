@@ -1,12 +1,12 @@
 import {Image, PanResponder, Text, View} from 'react-native';
 import React, {useMemo, useState} from "react";
 import {getImageUrl} from "@/api/authFetch";
-import {Recipe} from "@/hooks/queries/useRandomRecipeQuery";
+import {RecipeWithKey} from "@/hooks/queries/useRandomRecipeQuery";
 import {useLikeMutation} from "@/hooks/mutations/useLikeMutation";
 import {useDislikeMutation} from "@/hooks/mutations/useDislikeMutation";
 
 type Props = {
-    recipe: Recipe;
+    recipe: RecipeWithKey;
     onSwipe: () => void;
     zIndex: number;
 }

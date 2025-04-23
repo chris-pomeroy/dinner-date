@@ -2,16 +2,16 @@ import {Image, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
 import {getImageUrl} from "@/api/authFetch";
 import {openBrowserAsync} from "expo-web-browser";
-import {Like} from "@/hooks/queries/useLikesQuery";
+import {RecipeWithKey} from "@/hooks/queries/useRandomRecipeQuery";
 
 type Props = {
-    like: Like;
+    recipe: RecipeWithKey;
 }
 
-export default function MatchResult({like}: Props) {
+export default function MatchResult({recipe}: Props) {
     return (
         <TouchableOpacity
-            onPress={() => openBrowserAsync(like.recipe.recipeUrl)}
+            onPress={() => openBrowserAsync(recipe.recipeUrl)}
             style={{
                 width: "100%",
                 flexDirection: "row",
@@ -26,7 +26,7 @@ export default function MatchResult({like}: Props) {
                 <Image style={{
                     width: "100%",
                     height: "100%"
-                }} src={getImageUrl(like.recipe.imageName)}/>
+                }} src={getImageUrl(recipe.imageName)}/>
                 <Text style={{
                     fontSize: 20,
                     fontWeight: "bold",
@@ -35,7 +35,7 @@ export default function MatchResult({like}: Props) {
                     bottom: 10,
                     left: 10,
                     right: 10
-                }}>{like.recipe.title}</Text>
+                }}>{recipe.title}</Text>
             </View>
         </TouchableOpacity>
     )

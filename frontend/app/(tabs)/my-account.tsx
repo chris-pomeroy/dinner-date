@@ -1,10 +1,8 @@
-import {FlatList, SafeAreaView, TouchableOpacity} from 'react-native';
-import MatchResult from "@/components/MatchResult";
-import {useLikesQuery} from "@/hooks/queries/useLikesQuery";
+import {SafeAreaView} from 'react-native';
 import useLogoutMutation from "@/hooks/mutations/useLogoutMutation";
 import Button from "@/components/Button";
 
-export default function MatchesScreen() {
+export default function MyAccountScreen() {
 
     const {mutate: logout, isError, isPending} = useLogoutMutation();
 

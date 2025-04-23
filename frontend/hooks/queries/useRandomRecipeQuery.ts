@@ -1,9 +1,8 @@
 import {useQuery} from "@tanstack/react-query";
-import {authFetch} from "@/api/authFetch";
+import {addKeysToRecipes, authFetch} from "@/api/authFetch";
 import {useEffect, useState} from "react";
-import {randomUUID} from "expo-crypto";
 
-type Recipe = {
+export type Recipe = {
     id: number;
     title: string;
     description: string;
@@ -31,10 +30,7 @@ export const useRandomRecipeQuery = (recipesToCache: number) => {
             return
         }
         refetch().then(({data}) => {
-            const dataWithKeys = (data ?? []).map(recipe => { return {
-                ...recipe,
-                key: randomUUID()
-            }})
+            const dataWithKeys = addKeysToRecipes(data)
             setRecipes(prev => [...prev, ...dataWithKeys])
         })
     }, [recipesToQuery])

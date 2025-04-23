@@ -1,6 +1,8 @@
 // const devServer = Constants.expoConfig?.hostUri ? Constants.expoConfig.hostUri.split(':')[0] : "localhost";
 // const api = `http://${devServer}:8080`;
 import {deleteItemAsync, getItemAsync, setItemAsync} from "expo-secure-store";
+import {Recipe} from "@/hooks/queries/useRandomRecipeQuery";
+import {randomUUID} from "expo-crypto";
 
 const SECURE_STORE_KEY = "sessionId";
 
@@ -70,4 +72,11 @@ export const authPost = <T>(
 
 export function getImageUrl(imageName: string) {
     return `${api}/recipe-images/${imageName}`;
+}
+
+export function addKeysToRecipes(recipes: Recipe[] = []) {
+    return recipes.map(recipe => { return {
+        ...recipe,
+        key: randomUUID()
+    }})
 }
