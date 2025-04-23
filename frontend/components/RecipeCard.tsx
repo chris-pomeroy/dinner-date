@@ -101,7 +101,7 @@ export function RecipeCard({recipe, onSwipe, zIndex}: Props) {
                     fontSize: 30,
                     fontWeight: "bold",
                     color: "white"
-                }}>{"TEST!!!"}</Text>
+                }}>{recipe?.title}</Text>
                 <Text style={{color: "white"}}>{recipe?.description}</Text>
             </View>
         </View>
