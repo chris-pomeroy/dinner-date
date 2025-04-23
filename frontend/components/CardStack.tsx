@@ -22,7 +22,7 @@ export default function CardStack() {
                         recipe={recipe}
                         onSwipe={popRecipe}
                         zIndex={RECIPES_TO_CACHE - index}
-                        key={`${recipe.id}-${index}`} // TODO is this optimal?
+                        key={recipe.key}
                     />
                 )
             })}
