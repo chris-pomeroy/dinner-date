@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Dinner Date",
-    "slug": "dinner-date",
+    "name": "frontend",
+    "slug": "frontend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -37,20 +37,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "17d91ea4-a7bf-446f-97ea-75b137c96318"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/17d91ea4-a7bf-446f-97ea-75b137c96318"
     }
   }
 }
