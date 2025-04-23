@@ -1,6 +1,6 @@
 package com.chris.dinnerdate.controller;
 
-import com.chris.dinnerdate.model.Like;
+import com.chris.dinnerdate.model.Recipe;
 import com.chris.dinnerdate.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,7 @@ public class LikesController {
     }
 
     @GetMapping("likes")
-    public List<Like> getLikes(@RequestParam(defaultValue = "0") int page) {
+    public List<Recipe> getLikes(@RequestParam(defaultValue = "0") int page) {
         return likeService.getLikes(page);
     }
 }
