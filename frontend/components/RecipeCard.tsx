@@ -1,16 +1,20 @@
 import {Image, PanResponder, Text, View} from 'react-native';
-
 import React, {useMemo, useState} from "react";
 import {getImageUrl} from "@/api/authFetch";
-import {useRandomRecipeQuery} from "@/hooks/queries/useRandomRecipeQuery";
+import {Recipe} from "@/hooks/queries/useRandomRecipeQuery";
 import {useLikeMutation} from "@/hooks/mutations/useLikeMutation";
 import {useDislikeMutation} from "@/hooks/mutations/useDislikeMutation";
 
-export function RecipeCard() {
+type Props = {
+    recipe: Recipe;
+    onSwipe: () => void;
+    zIndex: number;
+}
+
+export function RecipeCard({recipe, onSwipe, zIndex}: Props) {
 
     const DX_THRESHOLD = 100;
 
-    const {data: recipe, refetch} = useRandomRecipeQuery();
     const {mutate: like} = useLikeMutation();
     const {mutate: dislike} = useDislikeMutation();
 
@@ -25,11 +29,11 @@ export function RecipeCard() {
             }
             if (gestureState.dx > DX_THRESHOLD) {
                 like(recipe.id)
-                refetch()
+                onSwipe()
             }
             if (gestureState.dx < -DX_THRESHOLD) {
                 dislike(recipe.id)
-                refetch()
+                onSwipe()
             }
             setDx(0)
         }
@@ -40,11 +44,12 @@ export function RecipeCard() {
             borderRadius: 20,
             overflow: "hidden",
             backgroundColor: "lightgrey",
-            width: "90%",
-            height: "90%",
-            position: "relative",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
             left: dx,
-            transform: [{rotate: `${dx * 0.03}deg`}]
+            transform: [{rotate: `${dx * 0.03}deg`}],
+            zIndex: zIndex
         }}>
             <Image style={{
                 width: "100%",

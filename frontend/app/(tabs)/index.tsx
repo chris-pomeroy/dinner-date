@@ -1,14 +1,14 @@
 import {SafeAreaView} from 'react-native';
 
-import {RecipeCard} from "@/components/RecipeCard";
+import CardStack from "@/components/CardStack";
 
 export default function HomeScreen() {
     return (
         <SafeAreaView style={{
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "center"
         }}>
-            <RecipeCard/>
+            <CardStack/>
         </SafeAreaView>
     );
 }
