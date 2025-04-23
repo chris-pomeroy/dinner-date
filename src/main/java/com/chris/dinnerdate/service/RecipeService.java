@@ -4,7 +4,9 @@ import com.chris.dinnerdate.model.Recipe;
 import com.chris.dinnerdate.repository.RecipeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.LongStream;
 
 @Service
 public class RecipeService {
@@ -17,9 +19,11 @@ public class RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-    public Recipe getRandomRecipe() {
-        Long randomID = ThreadLocalRandom.current().nextLong(recipeCount) + 1;
-        return recipeRepository.findById(randomID)
-                .orElseThrow();
+    public Iterable<Recipe> getRandomRecipes(int count) {
+        List<Long> randomIds = LongStream.generate(() -> ThreadLocalRandom.current().nextLong(recipeCount) + 1)
+                .limit(count)
+                .boxed()
+                .toList();
+        return recipeRepository.findAllById(randomIds);
     }
 }
