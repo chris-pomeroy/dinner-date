@@ -25,8 +25,7 @@ public class AuthFilter extends OncePerRequestFilter {
             "/login", HttpMethod.POST,
             "/register", HttpMethod.POST,
             "/health", HttpMethod.GET,
-            "/recipe-images/", HttpMethod.GET,
-            "/hello", HttpMethod.GET
+            "/recipe-images/", HttpMethod.GET
     );
 
     private static final String BEARER_PREFIX = "Bearer ";
