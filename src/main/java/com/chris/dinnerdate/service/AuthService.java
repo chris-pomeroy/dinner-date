@@ -31,7 +31,7 @@ public class AuthService {
         User user = new User();
         user.setFirstName(authRequest.firstName());
         user.setEmail(authRequest.email());
-        user.setPassword(passwordEncoder.encode(authRequest.password()));
+        user.setPasswordHash(passwordEncoder.encode(authRequest.password()));
 
         userRepository.save(user);
     }
@@ -42,7 +42,7 @@ public class AuthService {
         }
 
         User user = userRepository.findByEmail(email);
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password is not valid");
         }
 
