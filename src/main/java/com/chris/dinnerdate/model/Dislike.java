@@ -2,11 +2,13 @@ package com.chris.dinnerdate.model;
 
 import com.chris.dinnerdate.config.UserContext;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "dislikes")
 public class Dislike {
