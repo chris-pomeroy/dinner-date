@@ -1,3 +1,4 @@
 CREATE TABLE public.lobbies (
-  id serial NOT NULL PRIMARY KEY
+  id serial NOT NULL PRIMARY KEY,
+  join_code text
 );
