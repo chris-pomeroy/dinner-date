@@ -4,18 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "lobbies")
+public class Lobby {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String email;
-    private String passwordHash;
-    private String sessionId;
-    private Long currentLobbyId;
+    private String joinCode;
+    private LocalDateTime joinCodeExpiry;
 }

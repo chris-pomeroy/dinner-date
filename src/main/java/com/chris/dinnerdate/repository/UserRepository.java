@@ -20,4 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query("UPDATE User u SET u.sessionId = NULL WHERE u.id = :userId")
     void clearSession(Long userId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u SET u.currentLobbyId = :currentLobbyId where u.id = :id")
+    void updateCurrentLobbyIdById(Long currentLobbyId, Long id);
 }
