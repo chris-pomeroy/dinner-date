@@ -19,7 +19,7 @@ public class RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-    public Iterable<Recipe> getRandomRecipes(int count) {
+    public List<Recipe> getRandomRecipes(int count) {
         List<Long> randomIds = LongStream.generate(() -> ThreadLocalRandom.current().nextLong(recipeCount) + 1)
                 .limit(count)
                 .boxed()

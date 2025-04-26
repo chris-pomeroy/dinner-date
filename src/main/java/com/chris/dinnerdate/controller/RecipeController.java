@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/recipes")
@@ -16,7 +18,7 @@ public class RecipeController {
     private final RecipeService recipeService;
 
     @GetMapping("/random")
-    public Iterable<Recipe> getRandomRecipes(@RequestParam(defaultValue = "1") int count) {
+    public List<Recipe> getRandomRecipes(@RequestParam(defaultValue = "1") int count) {
         return recipeService.getRandomRecipes(count);
     }
 }
