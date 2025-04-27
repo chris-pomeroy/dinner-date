@@ -4,7 +4,7 @@ CREATE TABLE public.users (
   email text NOT NULL UNIQUE,
   password_hash text NOT NULL,
   session_id text UNIQUE,
-  current_lobby_id INTEGER REFERENCES lobbies(id) ON DELETE CASCADE
+  lobby_id INTEGER REFERENCES lobbies(id) ON DELETE SET NULL
 );
 
 CREATE INDEX idx_session_id ON public.users(session_id);

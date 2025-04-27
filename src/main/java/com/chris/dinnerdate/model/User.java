@@ -17,5 +17,5 @@ public class User {
     private String email;
     private String passwordHash;
     private String sessionId;
-    private Long currentLobbyId;
+    private Long lobbyId;
 }

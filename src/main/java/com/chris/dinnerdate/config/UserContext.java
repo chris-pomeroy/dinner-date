@@ -9,7 +9,7 @@ public class UserContext {
     private static final ThreadLocal<UserInfo> userThreadLocal = new ThreadLocal<>();
 
     public static void setContext(User user) {
-        userThreadLocal.set(new UserInfo(user.getId(), user.getEmail(), user.getCurrentLobbyId()));
+        userThreadLocal.set(new UserInfo(user.getId(), user.getEmail(), user.getLobbyId()));
     }
 
     public static Long getId() {
@@ -20,7 +20,7 @@ public class UserContext {
         return userThreadLocal.get().email();
     }
 
-    public static Long getCurrentLobbyId() {
+    public static Long getLobbyId() {
         return userThreadLocal.get().currentLobbyId();
     }
 
