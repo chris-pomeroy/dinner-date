@@ -21,6 +21,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenGenerator tokenGenerator;
 
+    private static final int SESSION_ID_ENTROPY_IN_BYTES = 32;
+
     public void registerUser(AuthRequest authRequest) {
         if (userRepository.existsByEmail(authRequest.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email address already in use");
@@ -44,7 +46,7 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password is not valid");
         }
 
-        String sessionId = tokenGenerator.generate();
+        String sessionId = tokenGenerator.generate(SESSION_ID_ENTROPY_IN_BYTES);
         user.setSessionId(sessionId);
         userRepository.save(user);
         return sessionId;

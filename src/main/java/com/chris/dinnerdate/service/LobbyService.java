@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 public class LobbyService {
 
     private static final Duration LOBBY_JOIN_CODE_EXPIRY = Duration.ofDays(7);
+    private static final int JOIN_CODE_ENTROPY_IN_BYTES = 8;
 
     private final LobbyRepository lobbyRepository;
     private final UserRepository userRepository;
@@ -28,7 +29,7 @@ public class LobbyService {
 
     // Create a new lobby and add the user who created it
     public String createLobby() {
-        String joinCode = tokenGenerator.generate();
+        String joinCode = tokenGenerator.generate(JOIN_CODE_ENTROPY_IN_BYTES);
 
         Lobby lobby = new Lobby();
         lobby.setJoinCode(joinCode);

@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/lobby")
 @RequiredArgsConstructor
-public class LobbyController {
+@RequestMapping("/invite")
+public class InviteController {
+
+    public record CreateInviteResponse(String inviteToken) {}
 
     private final InviteService inviteService;
 
-    public record InviteLobbyResponse(String joinCode) {}
-
-    @PostMapping("/invite")
-    public InviteLobbyResponse inviteToLobby() {
-        return new InviteLobbyResponse(inviteService.createInvite());
+    @PostMapping("/create")
+    public CreateInviteResponse createInvite() {
+        return new CreateInviteResponse(inviteService.createInvite());
     }
 }
