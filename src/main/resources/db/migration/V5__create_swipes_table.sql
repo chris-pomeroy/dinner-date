@@ -8,4 +8,4 @@ CREATE TABLE public.swipes (
   swipe_type swipe_type_enum NOT NULL
 );
 
-CREATE INDEX idx_session_id ON public.swipes(user_id, swipe_type);
+CREATE INDEX idx_swipes ON public.swipes(user_id, swipe_type);
