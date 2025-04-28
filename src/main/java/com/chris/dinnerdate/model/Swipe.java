@@ -3,6 +3,8 @@ package com.chris.dinnerdate.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +27,7 @@ public class Swipe {
     @ManyToOne
     private User user;
 
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private SwipeType swipeType;
 
     public static Swipe of(long recipeId, long userId, SwipeType swipeType) {
