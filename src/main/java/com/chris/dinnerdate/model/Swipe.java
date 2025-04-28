@@ -1,16 +1,16 @@
 package com.chris.dinnerdate.model;
 
-import com.chris.dinnerdate.config.UserContext;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "likes")
-public class Like {
+@Table(name = "swipes")
+public class Swipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +25,19 @@ public class Like {
     @ManyToOne
     private User user;
 
-    public static Like withRecipeId(long recipeId) {
+    private SwipeType swipeType;
+
+    public static Swipe of(long recipeId, long userId, SwipeType swipeType) {
         Recipe recipe = new Recipe();
         recipe.setId(recipeId);
-        Like like = new Like();
-        like.setRecipe(recipe);
+
         User user = new User();
-        user.setId(UserContext.getId());
-        like.setUser(user);
-        return like;
+        user.setId(userId);
+
+        Swipe swipe = new Swipe();
+        swipe.setRecipe(recipe);
+        swipe.setUser(user);
+        swipe.setSwipeType(swipeType);
+        return swipe;
     }
 }
