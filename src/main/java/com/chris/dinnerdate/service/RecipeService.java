@@ -15,8 +15,8 @@ public class RecipeService {
     private final Long recipeCount;
 
     public RecipeService(RecipeRepository recipeRepository) {
-        recipeCount = recipeRepository.count();
         this.recipeRepository = recipeRepository;
+        recipeCount = recipeRepository.count();
     }
 
     public List<Recipe> getRandomRecipes(int count) {
