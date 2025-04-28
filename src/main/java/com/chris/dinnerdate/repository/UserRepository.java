@@ -28,4 +28,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.lobbyId = :newLobbyId WHERE u.id IN :userIds")
     void updateCurrentLobbyId(Long newLobbyId, List<Long> userIds);
+
+    List<User> findByLobbyId(Long lobbyId);
 }
