@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class SwipesController {
+public class SwipeController {
 
     private final SwipeService swipeService;
 
