@@ -4,3 +4,5 @@ CREATE TABLE public.matches (
   matched_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   user_id INTEGER NOT NULL REFERENCES users(id)
 );
+
+CREATE INDEX idx_user_id ON public.swipes(user_id);
