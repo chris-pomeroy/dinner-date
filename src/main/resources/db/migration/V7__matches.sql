@@ -2,6 +2,5 @@ CREATE TABLE public.matches (
   id serial NOT NULL PRIMARY KEY,
   recipe_id INTEGER NOT NULL REFERENCES recipes(id),
   matched_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  user_id INTEGER NOT NULL REFERENCES users(id),
-  hidden boolean NOT NULL DEFAULT FALSE
+  user_id INTEGER NOT NULL REFERENCES users(id)
 );
