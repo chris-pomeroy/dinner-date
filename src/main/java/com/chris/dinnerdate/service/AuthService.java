@@ -2,8 +2,9 @@ package com.chris.dinnerdate.service;
 
 import com.chris.dinnerdate.config.TokenGenerator;
 import com.chris.dinnerdate.config.UserContext;
-import com.chris.dinnerdate.controller.AuthController.AuthRequest;
 import com.chris.dinnerdate.controller.AuthController.AuthResponse;
+import com.chris.dinnerdate.controller.AuthController.LoginRequest;
+import com.chris.dinnerdate.controller.AuthController.RegisterRequest;
 import com.chris.dinnerdate.model.User;
 import com.chris.dinnerdate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,26 +25,26 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenGenerator tokenGenerator;
 
-    public AuthResponse registerUser(AuthRequest authRequest) {
-        if (userRepository.existsByEmail(authRequest.email())) {
+    public AuthResponse registerUser(RegisterRequest registerRequest) {
+        if (userRepository.existsByEmail(registerRequest.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email address already in use");
         }
 
         User user = new User();
-        user.setFirstName(authRequest.firstName());
-        user.setEmail(authRequest.email());
-        user.setPasswordHash(passwordEncoder.encode(authRequest.password()));
+        user.setFirstName(registerRequest.firstName());
+        user.setEmail(registerRequest.email());
+        user.setPasswordHash(passwordEncoder.encode(registerRequest.password()));
 
         return createSessionAndSaveUser(user);
     }
 
-    public AuthResponse login(AuthRequest authRequest) {
-        if (!userRepository.existsByEmail(authRequest.email())) {
+    public AuthResponse login(LoginRequest loginRequest) {
+        if (!userRepository.existsByEmail(loginRequest.email())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This email address has not been registered");
         }
 
-        User user = userRepository.findByEmail(authRequest.email());
-        if (!passwordEncoder.matches(authRequest.password(), user.getPasswordHash())) {
+        User user = userRepository.findByEmail(loginRequest.email());
+        if (!passwordEncoder.matches(loginRequest.password(), user.getPasswordHash())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password is not valid");
         }
 

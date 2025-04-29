@@ -12,17 +12,18 @@ public class AuthController {
 
     private final AuthService authService;
 
-    public record AuthRequest(String firstName, String email, String password) {}
+    public record RegisterRequest(String firstName, String email, String password) {}
+    public record LoginRequest(String firstName, String email, String password) {}
     public record AuthResponse(String sessionId) {}
 
     @PostMapping("/register")
-    public AuthResponse register(@RequestBody AuthRequest authRequest) {
-        return authService.registerUser(authRequest);
+    public AuthResponse register(@RequestBody RegisterRequest registerRequest) {
+        return authService.registerUser(registerRequest);
     }
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest authRequest) {
-        return authService.login(authRequest);
+    public AuthResponse login(@RequestBody LoginRequest loginRequest) {
+        return authService.login(loginRequest);
     }
 
     @PostMapping("/logout")
