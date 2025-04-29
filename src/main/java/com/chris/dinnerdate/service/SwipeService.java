@@ -57,7 +57,7 @@ public class SwipeService {
                 .toList();
 
         matchRepository.saveAll(matches);
-}
+    }
 
     public void dislikeRecipe(long recipeId) {
         saveSwipe(SwipeType.DISLIKE, recipeId);
