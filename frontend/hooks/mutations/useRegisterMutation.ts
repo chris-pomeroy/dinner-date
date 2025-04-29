@@ -1,6 +1,5 @@
-import {useMutation} from "@tanstack/react-query";
-import {authPost} from "@/api/authFetch";
-import {useLoginMutation} from "@/hooks/mutations/useLoginMutation";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {authPost, setAuthToken} from "@/api/authFetch";
 
 type RegisterRequest = {
     firstName: string;
@@ -8,13 +7,19 @@ type RegisterRequest = {
     password: string;
 }
 
+type RegisterResponse = {
+    sessionId: string
+}
+
 export const useRegisterMutation = () => {
-    const {mutate: postLogin} = useLoginMutation();
+    const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (req: RegisterRequest) => authPost('/register', {
-            body: JSON.stringify(req)
-        }),
-        onSuccess: (_, req) => postLogin(req),
+        mutationFn: async (req: RegisterRequest) => {
+            const response : RegisterResponse = await authPost(`/register`, req)
+            await setAuthToken(response.sessionId)
+            return response
+        },
+        onSuccess: () => queryClient.refetchQueries()
     })
 }

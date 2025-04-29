@@ -15,9 +15,7 @@ export const useLoginMutation = () => {
 
     return useMutation({
         mutationFn: async (req: LoginRequest) => {
-            const response : LoginResponse = await authPost(`/login`, {
-                body: JSON.stringify(req)
-            })
+            const response : LoginResponse = await authPost(`/login`, req)
             await setAuthToken(response.sessionId)
             return response
         },

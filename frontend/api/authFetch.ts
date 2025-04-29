@@ -40,11 +40,11 @@ export const authFetch = async <T>(
         authToken = await getItemAsync(SECURE_STORE_KEY);
     }
 
-    const res = await fetch(api + input, {
+    const res = await fetch(new URL(input,api), {
         ...init,
         headers: {
             'Content-Type': 'application/json',
-            ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+            ...(authToken && { Authorization: `Bearer ${authToken}` }),
             ...init.headers,
         },
     });
@@ -60,12 +60,14 @@ export const authFetch = async <T>(
     return body as T;
 };
 
-export const authPost = <T>(
+export const authPost = <T,B>(
     input: string,
+    body?: B,
     init: RequestInit = {}
 ): Promise<T> => {
     return authFetch(input, {
         method: "POST",
+        ...(body && { body: JSON.stringify(body) }),
         ...init,
     })
 }
