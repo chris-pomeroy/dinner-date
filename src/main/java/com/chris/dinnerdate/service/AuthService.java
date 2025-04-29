@@ -46,7 +46,7 @@ public class AuthService {
         if (!passwordEncoder.matches(authRequest.password(), user.getPasswordHash())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password is not valid");
         }
-        
+
         return createSessionAndSaveUser(user);
     }
 
