@@ -13,18 +13,16 @@ public class AuthController {
     private final AuthService authService;
 
     public record AuthRequest(String firstName, String email, String password) {}
+    public record AuthResponse(String sessionId) {}
 
     @PostMapping("/register")
-    public void register(@RequestBody AuthRequest authRequest) {
-        authService.registerUser(authRequest);
+    public AuthResponse register(@RequestBody AuthRequest authRequest) {
+        return authService.registerUser(authRequest);
     }
 
-    public record LoginResponse(String sessionId) {}
-
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody AuthRequest authRequest) {
-        String sessionID = authService.login(authRequest.email(), authRequest.password());
-        return new LoginResponse(sessionID);
+    public AuthResponse login(@RequestBody AuthRequest authRequest) {
+        return authService.login(authRequest);
     }
 
     @PostMapping("/logout")
