@@ -19,10 +19,6 @@ public class MeController {
 
     @GetMapping("/me")
     public MeResponse getMe() {
-        if (UserContext.getLobbyId() == null) {
-            return new MeResponse(UserContext.getFirstName(), UserContext.getEmail(), null);
-        }
-
         return new MeResponse(
                 UserContext.getFirstName(),
                 UserContext.getEmail(),

@@ -15,6 +15,10 @@ public class UserService {
     private final UserRepository userRepository;
 
     public List<LobbyMember> getLobbyMembers() {
+        if (UserContext.getLobbyId() == null) {
+            return null;
+        }
+
         return userRepository.findByLobbyId(UserContext.getLobbyId())
                 .stream()
                 .map(user -> new LobbyMember(user.getFirstName(), user.getEmail()))
