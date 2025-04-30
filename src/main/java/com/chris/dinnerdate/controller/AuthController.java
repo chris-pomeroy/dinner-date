@@ -28,7 +28,8 @@ public class AuthController {
             String email,
 
             @NotBlank(message = "Password cannot be blank")
-            String password) {}
+            String password
+    ) {}
 
     public record LoginRequest(
             @TrimmedAndLowerCase
@@ -37,7 +38,8 @@ public class AuthController {
             String email,
 
             @NotBlank(message = "Password cannot be blank")
-            String password) {}
+            String password
+    ) {}
 
     public record AuthResponse(String sessionId) {}
 

@@ -17,4 +17,10 @@ public class Recipe {
     private String description;
     private String imageName;
     private String recipeUrl;
+
+    public static Recipe withId(Long id) {
+        Recipe recipe = new Recipe();
+        recipe.setId(id);
+        return recipe;
+    }
 }

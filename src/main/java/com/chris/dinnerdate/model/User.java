@@ -18,4 +18,10 @@ public class User {
     private String passwordHash;
     private String sessionId;
     private Long lobbyId;
+
+    public static User withId(Long id) {
+        User user = new User();
+        user.setId(id);
+        return user;
+    }
 }

@@ -1,15 +1,19 @@
 package com.chris.dinnerdate.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "swipes")
 public class Swipe {
@@ -17,9 +21,6 @@ public class Swipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, insertable = false, updatable = false)
-    private LocalDateTime timeStamp;
 
     @ManyToOne
     private Recipe recipe;
@@ -30,17 +31,7 @@ public class Swipe {
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private SwipeType swipeType;
 
-    public static Swipe of(long recipeId, long userId, SwipeType swipeType) {
-        Recipe recipe = new Recipe();
-        recipe.setId(recipeId);
-
-        User user = new User();
-        user.setId(userId);
-
-        Swipe swipe = new Swipe();
-        swipe.setRecipe(recipe);
-        swipe.setUser(user);
-        swipe.setSwipeType(swipeType);
-        return swipe;
-    }
+    private ZonedDateTime createdAt;
+    private ZoneId timeZone;
+    private LocalDate localDate;
 }
