@@ -61,6 +61,19 @@ export const authFetch = async <T>(
     return body as T;
 };
 
+export const authGet = <T,Q>(
+    input: string,
+    queryParams?: Q,
+    init: RequestInit = {}
+): Promise<T> => {
+    const queryParamString = queryParams ?
+        `?${new URLSearchParams(queryParams).toString()}` : "";
+
+    return authFetch(input + queryParamString, {
+        ...init,
+    })
+}
+
 export const authPost = <T,B>(
     input: string,
     body?: B,
