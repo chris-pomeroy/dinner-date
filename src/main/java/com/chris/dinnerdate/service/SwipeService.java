@@ -46,18 +46,27 @@ public class SwipeService {
             return;
         }
 
-        // find likes same recipe ID and user ID in list
-        List<SwipeProjection> matchingLikes = swipeRepository.findLikesByRecipeIdAndUserIdInList(swipeRequest.recipeId(), users);
+        // find matching likes
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
+        LocalDate localDate = now.withZoneSameInstant(swipeRequest.timeZone())
+                .toLocalDate();
 
-        // check distinct likes size same as number of users
+        List<SwipeProjection> matchingLikes = swipeRepository.findLikesByRecipeIdAndLocalDateAndUserIdInList(
+                swipeRequest.recipeId(),
+                localDate,
+                users);
+
+        // TODO check if match already exists (or use UNIQUE with ON CONFLICT UPDATE)
+
+        // Check each user in the lobby has liked this recipe today
         if (matchingLikes.size() != users.size()) {
             return;
         }
 
         // save match for each user
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime nowLocal = now.toLocalDateTime();
         List<Match> matches = matchingLikes.stream()
-                .map(swipe -> Match.of(swipe.getRecipeId(), swipe.getUserId(), now))
+                .map(swipe -> Match.of(swipe.getRecipeId(), swipe.getUserId(), localDate, nowLocal))
                 .toList();
 
         matchRepository.saveAll(matches);

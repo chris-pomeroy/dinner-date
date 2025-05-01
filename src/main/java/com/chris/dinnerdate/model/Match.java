@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,16 +21,18 @@ public class Match {
     private Recipe recipe;
 
     private LocalDateTime matchedAt;
+    private LocalDate localDate;
     private Long userId;
 
-    public static Match of(long recipeId, long userId, LocalDateTime matchedAt) {
+    public static Match of(long recipeId, long userId, LocalDate localDate, LocalDateTime matchedAt) {
         Recipe recipe = new Recipe();
         recipe.setId(recipeId);
 
         Match swipe = new Match();
         swipe.setRecipe(recipe);
-        swipe.setUserId(userId);
         swipe.setMatchedAt(matchedAt);
+        swipe.setLocalDate(localDate);
+        swipe.setUserId(userId);
         return swipe;
     }
 }

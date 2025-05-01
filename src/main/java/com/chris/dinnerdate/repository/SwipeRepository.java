@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,8 @@ public interface SwipeRepository extends JpaRepository<Swipe, Long> {
     FROM Swipe s
     WHERE s.swipeType = 'LIKE'
     AND s.recipe.id = :recipeId
+    AND s.localDate = :localDate
     AND s.user.id IN :userIds
     """)
-    List<SwipeProjection> findLikesByRecipeIdAndUserIdInList(Long recipeId, List<Long> userIds);
+    List<SwipeProjection> findLikesByRecipeIdAndLocalDateAndUserIdInList(Long recipeId, LocalDate localDate, List<Long> userIds);
 }
