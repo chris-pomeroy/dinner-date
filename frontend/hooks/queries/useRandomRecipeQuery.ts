@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import {addKeysToRecipes, authFetch} from "@/api/authFetch";
+import {addKeysToRecipes, authGet} from "@/api/authFetch";
 import {useEffect, useState} from "react";
 
 export type Recipe = {
@@ -21,7 +21,7 @@ export const useRandomRecipeQuery = (recipesToCache: number) => {
 
     const {refetch} = useQuery<Recipe[]>({
         queryKey: ['recipe'],
-        queryFn: () => authFetch(`/recipes/random?count=${recipesToQuery}`),
+        queryFn: () => authGet('/recipes/random', {count: recipesToQuery}),
         enabled: false
     });
 

@@ -32,7 +32,7 @@ export class FetchError extends Error {
     }
 }
 
-export const authFetch = async <T>(
+const authFetch = async <T>(
     input: string,
     init: RequestInit = {}
 ): Promise<T> => {
