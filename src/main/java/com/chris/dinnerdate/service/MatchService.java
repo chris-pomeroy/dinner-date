@@ -2,6 +2,7 @@ package com.chris.dinnerdate.service;
 
 import com.chris.dinnerdate.config.UserContext;
 import com.chris.dinnerdate.model.Match;
+import com.chris.dinnerdate.model.Recipe;
 import com.chris.dinnerdate.repository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,15 @@ public class MatchService {
 
     private final MatchRepository matchRepository;
 
-    public List<Match> getTodayMatches(ZoneId timeZone) {
+    public List<Recipe> getTodayMatches(ZoneId timeZone) {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
         LocalDate localDate = now.withZoneSameInstant(timeZone)
                 .toLocalDate();
 
-        return matchRepository.findByUserIdAndLocalDate(UserContext.getId(), localDate);
+        return matchRepository.findByUserIdAndLocalDate(UserContext.getId(), localDate)
+                .stream()
+                .map(Match::getRecipe)
+                .toList();
     }
 
 }

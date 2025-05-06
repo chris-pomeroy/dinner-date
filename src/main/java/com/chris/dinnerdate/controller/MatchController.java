@@ -1,6 +1,6 @@
 package com.chris.dinnerdate.controller;
 
-import com.chris.dinnerdate.model.Match;
+import com.chris.dinnerdate.model.Recipe;
 import com.chris.dinnerdate.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class MatchController {
     private final MatchService matchService;
 
     @GetMapping("/today")
-    public List<Match> getMatches(@RequestParam ZoneId timeZone) {
+    public List<Recipe> getMatches(@RequestParam ZoneId timeZone) {
         return matchService.getTodayMatches(timeZone);
     }
 }
