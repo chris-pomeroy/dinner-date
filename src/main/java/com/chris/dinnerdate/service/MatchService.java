@@ -28,5 +28,4 @@ public class MatchService {
                 .map(Match::getRecipe)
                 .toList();
     }
-
 }
