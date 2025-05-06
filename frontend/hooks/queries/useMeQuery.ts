@@ -4,10 +4,12 @@ import {authGet, FetchError} from "@/api/authFetch";
 type Me = {
     firstName: string;
     email: string;
-    lobbyMembers: [{
-        firstName: string;
-        email: string;
-    }]
+    lobbyMembers: LobbyMember[];
+}
+
+type LobbyMember = {
+    firstName: string;
+    email: string;
 }
 
 export const useMeQuery = () => {
