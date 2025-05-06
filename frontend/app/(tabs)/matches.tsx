@@ -1,35 +1,20 @@
-import {FlatList, SafeAreaView} from 'react-native';
-import MatchResult from "@/components/MatchResult";
-import {useLikesQuery} from "@/hooks/queries/useLikesQuery";
-import {useFocusEffect} from "expo-router";
-import {useCallback} from "react";
+import {SafeAreaView} from 'react-native';
+import {useState} from "react";
 import Toggle from "@/components/Toggle";
+import MatchesList from "@/components/MatchesList";
+import LikesList from "@/components/LikesList";
 
 export default function MatchesScreen() {
 
-    const {data: likes, refetch} = useLikesQuery()
-
-    useFocusEffect(
-        useCallback(() => {
-            refetch();
-        }, [])
-    )
+    const [isSwitched, setIsSwitched] = useState(false);
 
     return (
-        <SafeAreaView style={{
-            // alignItems: "center",
-            // width: "100%"
-        }}>
-            <Toggle/>
-            <FlatList
-                data={likes}
-                keyExtractor={(item) => item.key}
-                contentContainerStyle={{
-                    gap: 20,
-                    width: "100%",
-                }}
-                renderItem={({item}) => <MatchResult recipe={item}/>}
+        <SafeAreaView>
+            <Toggle
+                isSwitched={isSwitched}
+                setIsSwitched={setIsSwitched}
             />
+            {isSwitched ? <LikesList /> : <MatchesList />}
         </SafeAreaView>
     );
 }

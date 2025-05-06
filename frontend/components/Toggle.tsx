@@ -1,9 +1,12 @@
 import {Pressable, StyleSheet, Text, View} from "react-native";
-import React, {useState} from "react";
+import React from "react";
 
-export default function Toggle() {
+type Props = {
+    isSwitched: boolean;
+    setIsSwitched: (isSwitched: boolean) => void;
+}
 
-    const [isSwitched, setIsSwitched] = useState(false);
+export default function Toggle({ isSwitched, setIsSwitched }: Props) {
 
     return (
         <View style={{

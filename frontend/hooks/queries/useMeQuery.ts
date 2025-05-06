@@ -1,8 +1,17 @@
 import {useQuery} from '@tanstack/react-query';
 import {authGet, FetchError} from "@/api/authFetch";
 
+type Me = {
+    firstName: string;
+    email: string;
+    lobbyMembers: [{
+        firstName: string;
+        email: string;
+    }]
+}
+
 export const useMeQuery = () => {
-    const query = useQuery<{ email: string }, FetchError>({
+    const query = useQuery<Me, FetchError>({
         queryKey: ['me'],
         queryFn: () => authGet(`/me`),
         retry: (failureCount, error) => {
