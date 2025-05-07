@@ -14,6 +14,9 @@ export default function Household() {
     const {mutate: join} = useJoinMutation()
 
     useEffect(() => {
+        if (!token) {
+            return;
+        }
         const joinToken = Array.isArray(token) ? token[0] : token
         join(joinToken)
     }, [join, token])
