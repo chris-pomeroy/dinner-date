@@ -1,12 +1,22 @@
 import {useMeQuery} from "@/hooks/queries/useMeQuery";
 import HouseholdMember from "@/components/HouseholdMember";
 import HouseholdPlaceholder from "@/components/HouseholdPlaceholder";
+import {useLocalSearchParams} from "expo-router";
+import {useEffect} from "react";
+import {useJoinMutation} from "@/hooks/mutations/useJoinMutation";
 
 export default function Household() {
 
     const MAX_HOUSEHOLD_MEMBERS = 4
 
     const {data} = useMeQuery()
+    const {token} = useLocalSearchParams()
+    const {mutate: join} = useJoinMutation()
+
+    useEffect(() => {
+        const joinToken = Array.isArray(token) ? token[0] : token
+        join(joinToken)
+    }, [join, token])
 
     if (!data) {
         // TODO loading skeleton
@@ -15,13 +25,17 @@ export default function Household() {
 
     return (
         <>
-            {data.lobbyMembers.map(member =>
+            {data.lobbyMembers ? data.lobbyMembers.map(member =>
                 <HouseholdMember
                     firstName={member.firstName}
                     key={member.email}
                 />
-            )}
-            {Array.from({length: Math.max(0, MAX_HOUSEHOLD_MEMBERS - data.lobbyMembers.length)}, (_, i) =>
+            ) : <HouseholdMember
+                    firstName={data.firstName}
+                    key={data.email}
+                />
+            }
+            {Array.from({length: Math.max(0, MAX_HOUSEHOLD_MEMBERS - (data.lobbyMembers ? data.lobbyMembers.length : 1))}, (_, i) =>
                 <HouseholdPlaceholder key={`placeholder-${i}`}/>)
             }
         </>
