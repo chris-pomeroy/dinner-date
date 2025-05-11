@@ -4,7 +4,7 @@ import {FlatList} from "react-native";
 import MatchResult from "@/components/MatchResult";
 import {useMatchesQuery} from "@/hooks/queries/useMatchesQuery";
 
-export default function LikesList() {
+export default function MatchesList() {
 
     const {data: matches, refetch} = useMatchesQuery()
 
