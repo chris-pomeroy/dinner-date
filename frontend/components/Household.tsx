@@ -28,17 +28,17 @@ export default function Household() {
 
     return (
         <>
-            {data.lobbyMembers ? data.lobbyMembers.map(member =>
+            <HouseholdMember
+                firstName={data.firstName}
+                key={data.email}
+            />
+            {data.lobbyMembers.map(member =>
                 <HouseholdMember
                     firstName={member.firstName}
                     key={member.email}
                 />
-            ) : <HouseholdMember
-                    firstName={data.firstName}
-                    key={data.email}
-                />
-            }
-            {Array.from({length: Math.max(0, MAX_HOUSEHOLD_MEMBERS - (data.lobbyMembers ? data.lobbyMembers.length : 1))}, (_, i) =>
+            )}
+            {Array.from({length: Math.max(0, MAX_HOUSEHOLD_MEMBERS - 1 - (data.lobbyMembers ? data.lobbyMembers.length : 0))}, (_, i) =>
                 <HouseholdPlaceholder key={`placeholder-${i}`}/>)
             }
         </>
