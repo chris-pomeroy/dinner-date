@@ -7,11 +7,13 @@ type InviteResponse = {
 }
 
 export const useInviteMutation = () => {
+    const devQueryParam = __DEV__ ? "?isDev=true" : ""
+
     return useMutation({
         mutationFn: () : Promise<InviteResponse> => authPost('/invite'),
         onSuccess: ({inviteToken}) => {
             Share.share({
-                message: `https://dinner-date.onrender.com/join/${inviteToken}`
+                message: `https://dinner-date.onrender.com/join/${inviteToken}${devQueryParam}`
             })
         }
     })
