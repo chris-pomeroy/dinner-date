@@ -16,11 +16,12 @@ public class UserService {
 
     public List<LobbyMember> getLobbyMembers() {
         if (UserContext.getLobbyId() == null) {
-            return null;
+            return List.of();
         }
 
         return userRepository.findByLobbyId(UserContext.getLobbyId())
                 .stream()
+                .filter(user -> !UserContext.getId().equals(user.getId()))
                 .map(user -> new LobbyMember(user.getFirstName(), user.getEmail()))
                 .toList();
     }
