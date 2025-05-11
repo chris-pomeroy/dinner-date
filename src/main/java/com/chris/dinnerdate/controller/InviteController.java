@@ -29,7 +29,7 @@ public class InviteController {
     }
 
     @GetMapping("/join/{inviteToken}")
-    public RedirectView redirect(@PathVariable String inviteToken, @RequestParam boolean isDev) {
+    public RedirectView redirect(@PathVariable String inviteToken, @RequestParam(required = false) boolean isDev) {
         // Validate this is a Base64 string
         Base64.getUrlDecoder().decode(inviteToken);
         inviteToken = URLEncoder.encode(inviteToken, UTF_8);
