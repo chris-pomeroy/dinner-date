@@ -13,7 +13,7 @@ type LobbyMember = {
 }
 
 export const useMeQuery = () => {
-    const query = useQuery<Me, FetchError>({
+    return useQuery<Me, FetchError>({
         queryKey: ['me'],
         queryFn: () => authGet(`/me`),
         retry: (failureCount, error) => {
@@ -21,11 +21,6 @@ export const useMeQuery = () => {
                 return false;
             }
             return failureCount < 3;
-        },
+        }
     });
-
-    return {
-        ...query,
-        isLoggedIn: query.data?.email,
-    };
 };

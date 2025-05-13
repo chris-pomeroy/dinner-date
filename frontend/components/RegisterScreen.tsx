@@ -1,6 +1,5 @@
-import {SafeAreaView, StyleSheet, TextInput, Text, Pressable} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useState} from "react";
-import {useLoginMutation} from "@/hooks/mutations/useLoginMutation";
 import Button from "@/components/Button";
 import {useRegisterMutation} from "@/hooks/mutations/useRegisterMutation";
 
@@ -54,18 +53,19 @@ export default function RegisterScreen({hideRegisterScreen}: Props) {
                 isError={isError}
                 isLoading={isPending}
             />
-            <Text style={{
+            <View style={{
                 marginTop: 30,
+                flexDirection: "row"
             }}>
-                Already have an account?{" "}
-                <Pressable onPress={hideRegisterScreen}>
-                    <Text style={{
+                <Text>{"Already have an account? "}</Text>
+                <Text
+                    onPress={hideRegisterScreen}
+                    style={{
                         textDecorationLine: "underline"
                     }}>
-                        Sign in
-                    </Text>
-                </Pressable>
-            </Text>
+                    Sign in
+                </Text>
+            </View>
         </SafeAreaView>
     );
 }

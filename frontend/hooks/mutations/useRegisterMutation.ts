@@ -1,5 +1,6 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {authPost, setAuthToken} from "@/api/authFetch";
+import {useAuthContext} from "@/contexts/AuthContext";
 
 type RegisterRequest = {
     firstName: string;
@@ -12,7 +13,8 @@ type RegisterResponse = {
 }
 
 export const useRegisterMutation = () => {
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
+    const {setIsLoggedIn} = useAuthContext()
 
     return useMutation({
         mutationFn: async (req: RegisterRequest) => {
@@ -20,6 +22,9 @@ export const useRegisterMutation = () => {
             await setAuthToken(response.sessionId)
             return response
         },
-        onSuccess: () => queryClient.refetchQueries()
+        onSuccess: () => {
+            queryClient.refetchQueries()
+            setIsLoggedIn(true)
+        }
     })
 }

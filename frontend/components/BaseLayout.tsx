@@ -1,14 +1,22 @@
 import {Stack} from "expo-router";
 import {StatusBar} from "expo-status-bar";
-import {useMeQuery} from "@/hooks/queries/useMeQuery";
 import LoginScreen from "@/components/LoginScreen";
-import {authTokenIsSet} from "@/api/authFetch";
+import {useAuthContext} from "@/contexts/AuthContext";
+import {useMeQuery} from "@/hooks/queries/useMeQuery";
+import {useEffect} from "react";
 
 export default function BaseLayout() {
 
-    const {isLoggedIn} = useMeQuery();
+    const {isLoggedIn, setIsLoggedIn} = useAuthContext()
+    const {isSuccess} = useMeQuery()
 
-    if (!isLoggedIn || !authTokenIsSet()) {
+    useEffect(() => {
+        if (isSuccess) {
+            setIsLoggedIn(true)
+        }
+    }, [isSuccess, setIsLoggedIn])
+
+    if (!isLoggedIn) {
         return <LoginScreen />
     }
 

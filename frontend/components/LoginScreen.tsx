@@ -1,4 +1,4 @@
-import {Pressable, SafeAreaView, StyleSheet, Text, TextInput} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useState} from "react";
 import {useLoginMutation} from "@/hooks/mutations/useLoginMutation";
 import Button from "@/components/Button";
@@ -14,7 +14,7 @@ export default function LoginScreen() {
     const {mutate: postLogin, isError, isPending} = useLoginMutation();
 
     if (showRegisterScreen) {
-        return <RegisterScreen hideRegisterScreen={() => setShowRegisterScreen(false)} />;
+        return <RegisterScreen hideRegisterScreen={() => setShowRegisterScreen(false)}/>;
     }
 
     return (
@@ -47,18 +47,19 @@ export default function LoginScreen() {
                 isError={isError}
                 isLoading={isPending}
             />
-            <Text style={{
+            <View style={{
                 marginTop: 30,
+                flexDirection: "row"
             }}>
-                Don't have an account?{" "}
-                <Pressable onPress={() => setShowRegisterScreen(true)}>
-                    <Text style={{
-                        textDecorationLine: "underline"
+                <Text>{"Don't have an account? "}</Text>
+                <Text
+                    onPress={() => setShowRegisterScreen(true)}
+                    style={{
+                        textDecorationLine: "underline",
                     }}>
-                        Sign up
-                    </Text>
-                </Pressable>
-            </Text>
+                    Sign up
+                </Text>
+            </View>
         </SafeAreaView>
     );
 }

@@ -9,6 +9,7 @@ import {QueryClient} from "@tanstack/query-core";
 import {QueryClientProvider} from "@tanstack/react-query";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import BaseLayout from "@/components/BaseLayout";
+import {AuthProvider} from "@/contexts/AuthContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -33,9 +34,11 @@ export default function RootLayout() {
     return (
         <QueryClientProvider client={queryClient}>
             <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-                <SafeAreaProvider>
-                    <BaseLayout/>
-                </SafeAreaProvider>
+                <AuthProvider>
+                    <SafeAreaProvider>
+                        <BaseLayout/>
+                    </SafeAreaProvider>
+                </AuthProvider>
             </ThemeProvider>
         </QueryClientProvider>
     );

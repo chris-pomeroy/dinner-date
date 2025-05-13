@@ -21,10 +21,6 @@ export const clearAuthToken = () => {
     return deleteItemAsync(SECURE_STORE_KEY);
 }
 
-export const authTokenIsSet = () => {
-    return !!authToken;
-}
-
 export class FetchError extends Error {
     status: number;
     body: unknown;
