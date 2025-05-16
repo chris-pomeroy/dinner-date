@@ -18,8 +18,14 @@ public class MatchController {
 
     private final MatchService matchService;
 
+    // TODO this endpoint not currently in use
     @GetMapping("/today")
-    public List<Recipe> getMatches(@RequestParam ZoneId timeZone) {
+    public List<Recipe> getTodayMatches(@RequestParam ZoneId timeZone) {
         return matchService.getTodayMatches(timeZone);
+    }
+
+    @GetMapping("/all")
+    public List<Recipe> getMatches(@RequestParam(defaultValue = "0") int page) {
+        return matchService.getMatches(page);
     }
 }
