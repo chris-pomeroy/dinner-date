@@ -6,9 +6,3 @@
 - Test accounts are `bilbo@email.com` or `frodo@email.com` password is `password`
 
 <img src="/frontend/eas-update.svg" width="250" />
-
-### WIP - Upcoming features
-- [ ] Passwordless Authenticaion (OAuth / Passkeys)
-- [ ] Recipe filters e.g. "Vegetarian"
-- [ ] Improved swipe animations
-- [ ] Notifications
