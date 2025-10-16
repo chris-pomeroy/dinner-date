@@ -16,11 +16,6 @@ export const useMeQuery = () => {
     return useQuery<Me, FetchError>({
         queryKey: ['me'],
         queryFn: () => authGet(`/me`),
-        retry: (failureCount, error) => {
-            if (error.status === 401) {
-                return false;
-            }
-            return failureCount < 3;
-        }
+        retry: false
     });
 };
