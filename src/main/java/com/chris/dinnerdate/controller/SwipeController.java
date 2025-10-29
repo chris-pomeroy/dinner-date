@@ -1,6 +1,7 @@
 package com.chris.dinnerdate.controller;
 
 import com.chris.dinnerdate.model.Recipe;
+import com.chris.dinnerdate.model.Swipe;
 import com.chris.dinnerdate.service.SwipeService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +28,7 @@ public class SwipeController {
     }
 
     @GetMapping("likes")
-    public List<Recipe> getLikes(@RequestParam(defaultValue = "0") int page) {
+    public List<Swipe> getLikes(@RequestParam(defaultValue = "0") int page) {
         return swipeService.getLikes(page);
     }
 

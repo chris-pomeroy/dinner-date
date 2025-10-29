@@ -17,12 +17,12 @@ export default function MatchesList() {
     return (
         <FlatList
             data={matches}
-            keyExtractor={(item) => item.key}
+            keyExtractor={(item) => `${item.id}`}
             contentContainerStyle={{
                 gap: 20,
                 width: "100%",
             }}
-            renderItem={({item}) => <MatchResult recipe={item}/>}
+            renderItem={({item}) => <MatchResult recipe={item.recipe}/>}
         />
     );
 }

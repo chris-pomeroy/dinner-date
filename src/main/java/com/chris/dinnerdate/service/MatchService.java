@@ -20,25 +20,19 @@ public class MatchService {
 
     private final MatchRepository matchRepository;
 
-    public List<Recipe> getTodayMatches(ZoneId timeZone) {
+    public List<Match> getTodayMatches(ZoneId timeZone) {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
         LocalDate localDate = now.withZoneSameInstant(timeZone)
                 .toLocalDate();
 
-        return matchRepository.findByUserIdAndLocalDate(UserContext.getId(), localDate)
-                .stream()
-                .map(Match::getRecipe)
-                .toList();
+        return matchRepository.findByUserIdAndLocalDate(UserContext.getId(), localDate);
     }
 
-    public List<Recipe> getMatches(int page) {
+    public List<Match> getMatches(int page) {
         Sort sort = Sort.TypedSort.sort(Match.class)
                 .by(Match::getMatchedAt)
                 .descending();
         PageRequest pageRequest = PageRequest.of(page, 10, sort);
-        return matchRepository.findByUserId(UserContext.getId(), pageRequest)
-                .stream()
-                .map(Match::getRecipe)
-                .toList();
+        return matchRepository.findByUserId(UserContext.getId(), pageRequest);
     }
 }

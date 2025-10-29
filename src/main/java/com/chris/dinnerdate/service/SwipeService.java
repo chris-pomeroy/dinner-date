@@ -92,14 +92,11 @@ public class SwipeService {
                 .build());
     }
 
-    public List<Recipe> getLikes(int page) {
+    public List<Swipe> getLikes(int page) {
         Sort sort = TypedSort.sort(Swipe.class)
                 .by(Swipe::getCreatedAt)
                 .descending();
         PageRequest pageRequest = PageRequest.of(page, 10, sort);
-        return swipeRepository.findByUserIdAndSwipeType(UserContext.getId(), SwipeType.LIKE, pageRequest)
-                .stream()
-                .map(Swipe::getRecipe)
-                .toList();
+        return swipeRepository.findByUserIdAndSwipeType(UserContext.getId(), SwipeType.LIKE, pageRequest);
     }
 }

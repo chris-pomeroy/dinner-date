@@ -1,5 +1,6 @@
 package com.chris.dinnerdate.controller;
 
+import com.chris.dinnerdate.model.Match;
 import com.chris.dinnerdate.model.Recipe;
 import com.chris.dinnerdate.service.MatchService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,12 @@ public class MatchController {
 
     // TODO this endpoint not currently in use
     @GetMapping("/today")
-    public List<Recipe> getTodayMatches(@RequestParam ZoneId timeZone) {
+    public List<Match> getTodayMatches(@RequestParam ZoneId timeZone) {
         return matchService.getTodayMatches(timeZone);
     }
 
     @GetMapping("/all")
-    public List<Recipe> getMatches(@RequestParam(defaultValue = "0") int page) {
+    public List<Match> getMatches(@RequestParam(defaultValue = "0") int page) {
         return matchService.getMatches(page);
     }
 }

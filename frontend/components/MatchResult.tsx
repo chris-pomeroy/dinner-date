@@ -2,10 +2,10 @@ import {Image, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
 import {getImageUrl} from "@/api/authFetch";
 import {openBrowserAsync} from "expo-web-browser";
-import {RecipeWithKey} from "@/hooks/queries/useRandomRecipeQuery";
+import {Recipe} from "@/hooks/queries/useRandomRecipeQuery";
 
 type Props = {
-    recipe: RecipeWithKey;
+    recipe: Recipe;
 }
 
 export default function MatchResult({recipe}: Props) {

@@ -1,13 +1,15 @@
 import {useQuery} from "@tanstack/react-query";
-import {addKeysToRecipes, authGet} from "@/api/authFetch";
-import {Recipe, RecipeWithKey} from "@/hooks/queries/useRandomRecipeQuery";
+import {authGet} from "@/api/authFetch";
+import {Recipe} from "@/hooks/queries/useRandomRecipeQuery";
+
+export type Like = {
+    id: number;
+    recipe: Recipe;
+}
 
 export const useLikesQuery = () => {
-    return useQuery<RecipeWithKey[]>({
+    return useQuery<Like[]>({
         queryKey: ['likes'],
-        queryFn: async () => {
-            const recipes : Recipe[] = await authGet(`/likes`)
-            return addKeysToRecipes(recipes)
-        }
+        queryFn: () => authGet(`/likes`)
     });
 }
