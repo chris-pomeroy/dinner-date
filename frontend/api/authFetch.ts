@@ -2,10 +2,10 @@ import {deleteItemAsync, getItemAsync, setItemAsync} from "expo-secure-store";
 import {Recipe} from "@/hooks/queries/useRandomRecipeQuery";
 import {randomUUID} from "expo-crypto";
 
-// import Constants from 'expo-constants';
-// const devServer = Constants.expoConfig?.hostUri ? Constants.expoConfig.hostUri.split(':')[0] : "localhost";
-// const api = `http://${devServer}:8080`;
-const api = `https://dinner-date.onrender.com`;
+import Constants from 'expo-constants';
+const devServer = Constants.expoConfig?.hostUri ? Constants.expoConfig.hostUri.split(':')[0] : "localhost";
+const api = `http://${devServer}:8080`;
+// const api = `https://dinner-date.onrender.com`;
 
 const SECURE_STORE_KEY = "sessionId";
 
