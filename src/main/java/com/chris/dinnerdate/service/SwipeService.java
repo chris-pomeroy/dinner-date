@@ -84,7 +84,7 @@ public class SwipeService {
 
         swipeRepository.save(Swipe.builder()
                 .recipe(Recipe.withId(swipeRequest.recipeId()))
-                .user(User.withId(UserContext.getId()))
+                .userId(UserContext.getId())
                 .swipeType(swipeType)
                 .createdAt(now)
                 .timeZone(swipeRequest.timeZone())

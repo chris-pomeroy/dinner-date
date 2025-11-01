@@ -1,14 +1,14 @@
 package com.chris.dinnerdate.model;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity
 @Table(name = "invites")
 public class Invite {
 
@@ -26,9 +26,6 @@ public class Invite {
     @Id
     private String inviteToken;
 
-    @ManyToOne
     private User user;
-
-    @Column(nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAt;
 }
