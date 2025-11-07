@@ -1,4 +1,4 @@
-FROM amazoncorretto:25.0.0-alpine3.22
+FROM amazoncorretto:25.0.0-alpine3.22 AS build
 
 WORKDIR /app
 
@@ -14,8 +14,10 @@ COPY src/ src/
 # Build JAR file using Maven
 RUN ["./mvnw", "clean", "install"]
 
-# Rename the JAR file
-RUN mv target/*.jar service.jar
+FROM amazoncorretto:25.0.0-alpine3.22
+
+# Copy JAR from build stage
+COPY --from=build /app/target/*.jar service.jar
 
 # Start the service
-ENTRYPOINT ["java", "-jar", "service.jar"]
+CMD ["java", "-jar", "service.jar"]
