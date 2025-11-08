@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dinner-date
+spec:
+  template:
+    metadata:
+      labels:
+        app: dd-app
+    spec:
+      containers:
+        - name: dd-container
+          image: cpomeroy1992/dinner-date
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/mydatabase
+            - name: SPRING_DATASOURCE_USERNAME
+              value: myuser
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: secret
+      imagePullSecrets:
+        - name: regcred
+  selector:
+    matchLabels:
+      app: dd-app
