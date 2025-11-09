@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: dinner-date
 spec:
+  replicas: 3
   template:
     metadata:
       labels:
@@ -21,6 +22,10 @@ spec:
           resources:
             limits:
               cpu: "0.5"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
       imagePullSecrets:
         - name: regcred
   selector:
