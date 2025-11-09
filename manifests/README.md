@@ -6,6 +6,10 @@ docker build . -t <docker-username>/dinner-date
 docker push <docker-username>/dinner-date
 ```
 2) Set up a local k8s cluster
+3) Set up Metrics API
+```
+https://medium.com/@cloudspinx/fix-error-metrics-api-not-available-in-kubernetes-aa10766e1c2f
+```
 3) Spin everything up with the following commands:
 ```
 kubectl create secret docker-registry regcred --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
